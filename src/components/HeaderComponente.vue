@@ -1,36 +1,20 @@
 <template>
   <header class="header">
-    <div class="container">
-      <h1 class="logo">Meine Website</h1>
-      <nav class="nav">
-        <ul>
-          <li><a href="#home">Home</a></li>
-          <li><a href="#about">About</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
-      </nav>
-      <button class="menu-toggle" @click="toggleMenu">☰</button>
+    <div class="logo">
+      <img src="@/assets/images/nikopick-logo.jpeg" alt="App Logo" />
     </div>
+    <nav>
+      <button class="header-button" @click="navigateSignin">Anmelden</button>
+    </nav>
   </header>
 </template>
 
 <script>
 export default {
   name: "HeaderComponente",
-  data() {
-    return {
-      isMenuOpen: false,
-    };
-  },
   methods: {
-    toggleMenu() {
-      this.isMenuOpen = !this.isMenuOpen;
-      const nav = document.querySelector('.nav ul');
-      if (this.isMenuOpen) {
-        nav.classList.add('active');
-      } else {
-        nav.classList.remove('active');
-      }
+    navigateSignin() {
+      this.$router.push("/signin");
     },
   },
 };

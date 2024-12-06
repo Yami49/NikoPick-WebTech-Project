@@ -1,74 +1,47 @@
-/* header.css */
+/* src/assets/header.css */
 
 .header {
-    background-color: #333;
-    color: white;
-    padding: 10px 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between; /* Platz zwischen Logo und Navigation */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background-color: #A0D9ED;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Schatten für einen eleganten Look */
+  flex-wrap: wrap;
+}
+
+.logo img {
+  height: 50px; /* Maximale Höhe des Logos */
+  width: auto; /* Beibehaltung des Seitenverhältnisses */
+}
+
+nav {
+  display: flex;
+  gap: 10px; /* Abstand zwischen Navigationselementen */
+}
+
+.header-button {
+  background-color: #5899FF;
+  border: none;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.header-button:hover {
+  background-color: #3456A1; /* Hover-Effekt für den Button */
+}
+
+/* Responsiver Header */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column; /* Vertikale Ausrichtung bei schmalen Bildschirmen */
+    text-align: center;
   }
-  
-  .container {
-    display: flex;
-    align-items: center;
-    width: 100%;
+
+  nav {
+    margin-top: 10px; /* Abstand zwischen Logo und Navigation */
   }
-  
-  .logo {
-    font-size: 24px;
-    font-weight: bold;
-    margin-right: auto; /* Schiebt die Navigation nach rechts */
-  }
-  
-  .nav {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-  }
-  
-  .nav ul {
-    display: flex;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  .nav li {
-    margin: 0 15px; /* Abstand zwischen den Links */
-  }
-  
-  .nav a {
-    color: white;
-    text-decoration: none;
-  }
-  
-  .menu-toggle {
-    display: none;
-    background: none;
-    border: none;
-    color: white;
-    font-size: 24px;
-  }
-  
-  @media (max-width: 768px) {
-    .nav ul {
-      display: none; /* Navigation ausblenden in mobiler Ansicht */
-      flex-direction: column;
-      background-color: #444;
-      padding: 10px;
-      position: absolute;
-      top: 50px;
-      right: 20px;
-      width: 150px;
-    }
-  
-    .nav ul.active {
-      display: flex; /* Navigation einblenden, wenn das Hamburger-Menü aktiviert ist */
-    }
-  
-    .menu-toggle {
-      display: block; /* Hamburger-Menü nur in mobiler Ansicht anzeigen */
-    }
-  }
-  
+}

@@ -1,17 +1,24 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div id="app">
+    <HeaderComponente /> <!-- Header wird hier eingebunden -->
+    <HomePage />         <!-- Homepage wird hier eingebunden -->
+    <FooterComponente /> <!-- Footer wird hier eingebunden -->
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import HeaderComponente from './components/HeaderComponente.vue'; // Header importieren
+import FooterComponente from './components/FooterComponente.vue'; // Footer importieren
+import HomePage from './components/HomePage.vue'; // HomePage bleibt
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
-  }
-}
+    HeaderComponente,
+    FooterComponente,
+    HomePage,
+  },
+};
 </script>
 
 <style>
@@ -21,6 +28,6 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  margin-top: 0; /* Entferne margin-top, da Header enthalten ist */
 }
 </style>

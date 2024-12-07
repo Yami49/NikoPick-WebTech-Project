@@ -19,7 +19,62 @@ body {
 /* Container */
 .container {
   max-width: 1200px;
-  padding: 0 20px; /* Abstand am Rand */
+  padding: 0 0; /* Abstand am Rand */
+}
+
+.flavor-container {
+  max-width: 1600px;
+}
+
+/* Geschmaecker*/
+.flavors-section img {
+  width: 100%;          /* Bild nimmt die volle Breite des Containers ein */
+  height: auto;         /* Höhe wird automatisch angepasst, um das Seitenverhältnis zu wahren */
+  display: block;       /* Entfernt zusätzliche Abstände durch Inline-Elemente */
+  margin: 0;            /* Entfernt jeglichen Außenabstand */
+  padding: 0;           /* Entfernt jeglichen Innenabstand */
+}
+
+/* Entfernt Ränder und Abstände für die gesamte Sektion */
+.columForTwo {
+  margin: 0;
+  padding: 0;
+}
+
+/* Entfernt Ränder und Abstände für die Spalten */
+.col-md-6 {
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+/* Entfernt Ränder und Abstände für die Bilder */
+.col-md-6 img {
+  margin: 0;
+  padding: 0;
+  border: none;
+  display: block; /* Verhindert zusätzliche Abstände durch Inline-Elemente */
+  width: 100%;    /* Stellt sicher, dass die Bilder die volle Breite einnehmen */
+}
+
+/* Verhindert Abstände zwischen Zeilen */
+.row {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+/* Verhindert Abstände innerhalb der .flavors-section */
+.flavors-section {
+  margin: 0;
+  padding: 0;
+}
+
+/* Logo */
+.logo {
+  max-width: 100%;    /* Bild wird maximal so breit wie der Container */
+  height: auto;       /* Höhe passt sich automatisch an, um das Seitenverhältnis zu erhalten */
+  display: block;     /* Entfernt zusätzliche Abstände, die durch Inline-Elemente entstehen */
+  margin: 0 auto;     /* Zentriert das Bild innerhalb des Containers */
 }
 
 /* Typografie */
@@ -46,6 +101,8 @@ p {
 
 /* Buttons */
 button {
+  background-color: #5899FF;
+  color: white;
   font-family: inherit;
   font-size: 1rem;
   border: none;
@@ -58,16 +115,21 @@ button {
 }
 
 button:hover {
-  background-color: #3456A1;
-}
-
-.custom-button {
   background-color: #5899FF;
-  color: white;
 }
 
-.custom-button:hover {
-  background-color: #3456A1;
+.costum-button {
+  background-color: #5899FF;
+  border: none;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.costum-button:hover {
+  background-color: #3456A1; /* Hover-Effekt für den Button */
 }
 
 /* Links */

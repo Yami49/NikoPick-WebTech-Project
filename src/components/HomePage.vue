@@ -49,46 +49,47 @@
       </div>
     </div>
 
-    <div class="container">
-      <!-- Geschmacksrichtungen -->
-      <div class="flavors-section">
-        <img src="@/assets/images/geschmaecker.png" alt="Geschmäcker" />
-      </div>
+    <div class="flavor-container">
+  <!-- Geschmacksrichtungen -->
+  <div class="flavors-section">
+    <img src="@/assets/images/geschmaecker.png" alt="Geschmäcker" />
+  </div>
 
-      <!-- Nikopick Varianten -->
-      <div class="row columForTwo">
-        <!-- Mint -->
-        <div class="col-md-6 gray-bg text-center">
-          <img src="@/assets/images/blue-nikopick.png" alt="Mint NikoPick" />
-        </div>
-        <div class="col-md-6 black-bg text-center" style="background-color: blue;">
-          <p class="headline">MINT NIKOPICK</p>
-        </div>
-        <!-- Lemon -->
-        <div class="col-md-6 black-bg text-center" style="background-color: yellow;">
-          <p class="headline">LEMON NIKOPICK</p>
-        </div>
-        <div class="col-md-6 gray-bg text-center">
-          <img src="@/assets/images/yellow-nikopick.png" alt="Lemon NikoPick" />
-        </div>
-      </div>
-      <div class="row columForTwo">
-        <!-- Herb -->
-        <div class="col-md-6 gray-bg text-center">
-          <img src="@/assets/images/green-nikopick.png" alt="Herb NikoPick" />
-        </div>
-        <div class="col-md-6 black-bg text-center" style="background-color: green;">
-          <p class="headline">HERB NIKOPICK</p>
-        </div>
-        <!-- Strong -->
-        <div class="col-md-6 black-bg text-center" style="background-color: red;">
-          <p class="headline">STRONG NIKOPICK</p>
-        </div>
-        <div class="col-md-6 gray-bg text-center">
-          <img src="@/assets/images/red-nikopick.png" alt="Strong NikoPick" />
-        </div>
-      </div>
+  <!-- Nikopick Varianten -->
+  <div class="row columForTwo">
+    <!-- Mint -->
+    <div class="col-md-6 gray-bg text-center">
+      <img src="@/assets/images/blue-nikopick.png" alt="Mint NikoPick" />
     </div>
+    <div class="col-md-6 black-bg text-center" style="background-color: blue;">
+      <p class="headline">MINT NIKOPICK</p>
+    </div>
+    <!-- Lemon -->
+    <div class="col-md-6 black-bg text-center" style="background-color: yellow;">
+      <p class="headline">LEMON NIKOPICK</p>
+    </div>
+    <div class="col-md-6 gray-bg text-center">
+      <img src="@/assets/images/yellow-nikopick.png" alt="Lemon NikoPick" />
+    </div>
+  </div>
+
+  <div class="row columForTwo">
+    <!-- Herb -->
+    <div class="col-md-6 gray-bg text-center">
+      <img src="@/assets/images/green-nikopick.png" alt="Herb NikoPick" />
+    </div>
+    <div class="col-md-6 black-bg text-center" style="background-color: green;">
+      <p class="headline">HERB NIKOPICK</p>
+    </div>
+    <!-- Strong -->
+    <div class="col-md-6 black-bg text-center" style="background-color: red;">
+      <p class="headline">STRONG NIKOPICK</p>
+    </div>
+    <div class="col-md-6 gray-bg text-center">
+      <img src="@/assets/images/red-nikopick.png" alt="Strong NikoPick" />
+    </div>
+  </div>
+</div>
 
     <div class="blue-bg">
       <div class="container">
@@ -110,7 +111,7 @@
       </div>
     </div>
 
-    <div class="container">
+    <div class="flavor-container">
       <!-- Warnung -->
       <div class="row flavors-section">
         <img src="@/assets/images/warnung.png" alt="Warnung" />

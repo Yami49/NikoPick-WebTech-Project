@@ -1,15 +1,104 @@
 /* src/assets/styles.css */
 
+/* Globale Stile */
 body {
-    font-family: Avenir, Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    margin: 0;
-    padding: 0;
-    color: #2c3e50;
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+  padding: 0;
+  color: #2c3e50;
+  background-color: #f9f9f9;
+  line-height: 1.6; /* Verbessert die Lesbarkeit */
+}
+
+#app {
+  text-align: center;
+}
+
+/* Container */
+.container {
+  max-width: 1200px;
+  padding: 0 20px; /* Abstand am Rand */
+}
+
+/* Typografie */
+h1, h2, h3 {
+  color: #2c3e50;
+  margin-bottom: 20px;
+}
+
+p {
+  margin-bottom: 15px;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* Grauer Hintergrund */
+.grey-bg {
+  background-color: #f0f0f0; /* Helles Grau */
+}
+
+/* Blauer Hintergrund */
+.blue-bg {
+  background-color: #89CFF0;
+}
+
+/* Buttons */
+button {
+  font-family: inherit;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 10px 15px;
+  transition: background-color 0.3s ease;
+  width: auto;           /* Breite passt sich dem Inhalt an */
+  display: inline-block; /* Stellt sicher, dass der Button nur so breit wie der Text ist */
+}
+
+button:hover {
+  background-color: #3456A1;
+}
+
+.custom-button {
+  background-color: #5899FF;
+  color: white;
+}
+
+.custom-button:hover {
+  background-color: #3456A1;
+}
+
+/* Links */
+a {
+  color: #5899FF;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: #3456A1; /* Hover-Farbe für Links */
+}
+
+/* Abstände */
+.mb-4 {
+  margin-bottom: 1.5rem;
+}
+
+/* Responsive Layout */
+@media (max-width: 768px) {
+  .container {
+    padding: 0 10px;
   }
-  
-  #app {
-    text-align: center;
+
+  h1 {
+    font-size: 1.8rem;
   }
-  
+
+  .button {
+    width: 100%;       /* Button nimmt die volle Breite ein */
+    font-size: 1rem;   /* Schriftgröße bleibt gleich */
+    padding: 12px 20px; /* Größeres Padding für bessere Bedienbarkeit */
+  }
+}

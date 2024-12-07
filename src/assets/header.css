@@ -10,9 +10,18 @@
   flex-wrap: wrap;
 }
 
+/* Logo-Stil */
+.logo {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+
+/* Logo-Bild-Stil */
 .logo img {
-  height: 50px; /* Maximale Höhe des Logos */
-  width: auto; /* Beibehaltung des Seitenverhältnisses */
+  height: 50px;  /* Maximale Höhe des Logos */
+  width: auto;   /* Beibehaltung des Seitenverhältnisses */
+  display: block;
 }
 
 nav {

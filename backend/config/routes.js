@@ -22,6 +22,7 @@ module.exports.routes = {
   '/': { view: 'pages/homepage' },
 
   'GET /api/hello': 'TestController.hello',
+  'GET /api/test-connection': 'UserController.testConnection',
 
   /***************************************************************************
   *                                                                          *

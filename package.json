@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "sails-mysql": "^3.0.1"
+  }
+}

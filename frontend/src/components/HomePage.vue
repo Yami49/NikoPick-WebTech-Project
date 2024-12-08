@@ -2,6 +2,7 @@
   <main class="main-content">
     <div class="grey-bg">
       <div class="container">
+        <h1>{{ message }}</h1>
         <!-- Überschrift -->
         <div class="row justify-content-center mb-4">
           <div class="col-md-12 text-center ">
@@ -121,14 +122,36 @@
 </template>
 
 <script>
+import api from '@/services/api';
+
 export default {
   name: "HomePage",
+  data() {
+    return {
+      message: '', // Für den API-Text
+    };
+  },
+  created() {
+    this.fetchMessage(); // API-Daten beim Erstellen der Komponente laden
+  },
   methods: {
+    // Navigiert zur SignUp-Seite
     goToSignUpPage() {
       this.$router.push("/documents");
+    },
+
+    // Holt die Nachricht vom Backend-API
+    async fetchMessage() {
+      try {
+        const response = await api.get('/hello');
+        this.message = response.data.message;
+      } catch (error) {
+        console.error('API-Fehler:', error);
+      }
     },
   },
 };
 </script>
+
 
 <style src="../assets/styles.css"></style>

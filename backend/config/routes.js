@@ -24,6 +24,19 @@ module.exports.routes = {
   'GET /api/hello': 'TestController.hello',
   'GET /api/test-connection': 'UserController.testConnection',
 
+  /* ProductController*/
+  'POST /api/products': 'ProductController.create',
+  'GET /api/products': 'ProductController.findAll',
+  'GET /api/products/:id': 'ProductController.findOne',
+  'PUT /api/products/:id': 'ProductController.update',
+  'DELETE /api/products/:id': 'ProductController.delete',
+  'GET /api/products/search': 'ProductController.find',
+
+  /* CategoryController */
+  'POST /api/categories': 'CategoryController.create',
+  'GET /api/categories': 'CategoryController.findAll',
+  'DELETE /api/categories/:id': 'CategoryController.delete',
+
   /***************************************************************************
   *                                                                          *
   * More custom routes here...                                               *

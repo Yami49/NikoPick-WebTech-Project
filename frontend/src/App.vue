@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <HeaderComponente /> <!-- Header wird hier eingebunden -->
-    <HomePage />         <!-- Homepage wird hier eingebunden -->
+    <router-view />      <!-- Geroutete Seite wird hier eingebunden -->
     <FooterComponente /> <!-- Footer wird hier eingebunden -->
   </div>
 </template>
@@ -9,14 +9,12 @@
 <script>
 import HeaderComponente from './components/HeaderComponente.vue'; // Header importieren
 import FooterComponente from './components/FooterComponente.vue'; // Footer importieren
-import HomePage from './components/HomePage.vue'; // HomePage bleibt
 
 export default {
   name: 'App',
   components: {
     HeaderComponente,
     FooterComponente,
-    HomePage,
   },
 };
 </script>

@@ -118,6 +118,7 @@ button {
   transition: background-color 0.3s ease;
   width: auto; /* Breite passt sich dem Inhalt an */
   display: inline-block; /* Stellt sicher, dass der Button nur so breit wie der Text ist */
+  margin: 3px;
 }
 
 button:hover {

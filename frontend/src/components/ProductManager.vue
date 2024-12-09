@@ -11,6 +11,17 @@
       />
       <input v-model="minPrice" placeholder="Min Preis" type="number" />
       <input v-model="maxPrice" placeholder="Max Preis" type="number" />
+      <!-- Kategorie-Dropdown für den Filter -->
+      <select v-model="selectedCategory" @change="searchProducts">
+        <option value="">Alle Kategorien</option>
+        <option
+          v-for="category in categories"
+          :key="category.id"
+          :value="category.id"
+        >
+          {{ category.name }}
+        </option>
+      </select>
       <button @click="searchProducts">Suchen</button>
     </div>
 
@@ -64,12 +75,13 @@ export default {
     return {
       products: [],
       categories: [],
-      product: { name: "", description: "", price: 0, category: "" },
-      isEditing: false,
-      editingId: null,
       searchQuery: "",
       minPrice: "",
       maxPrice: "",
+      selectedCategory: "",
+      product: { name: "", description: "", price: 0, category: "" },
+      isEditing: false,
+      editingId: null,
     };
   },
   created() {
@@ -86,7 +98,6 @@ export default {
         console.error("Fehler beim Laden der Produkte:", error);
       }
     },
-
     // Alle Kategorien laden
     async fetchCategories() {
       try {
@@ -96,7 +107,22 @@ export default {
         console.error("Fehler beim Laden der Kategorien:", error);
       }
     },
-
+    // Such- und Filterfunktion
+    async searchProducts() {
+      try {
+        const response = await api.get("/products/search", {
+          params: {
+            name: this.searchQuery,
+            minPrice: this.minPrice,
+            maxPrice: this.maxPrice,
+            category: this.selectedCategory,
+          },
+        });
+        this.products = response.data;
+      } catch (error) {
+        console.error("Fehler bei der Suche:", error);
+      }
+    },
     // Produkt speichern (Erstellen oder Aktualisieren)
     async saveProduct() {
       try {
@@ -135,23 +161,6 @@ export default {
       this.isEditing = false;
       this.editingId = null;
     },
-
-    // Such- und Filterfunktion
-    async searchProducts() {
-      try {
-        const response = await api.get("/products/search", {
-          params: {
-            name: this.searchQuery,
-            minPrice: this.minPrice,
-            maxPrice: this.maxPrice,
-          },
-        });
-        this.products = response.data;
-      } catch (error) {
-        console.error("Fehler bei der Suche:", error);
-      }
-    },
-
     // Kategorie-Name anhand der ID holen
     getCategoryName(categoryId) {
       const category = this.categories.find((c) => c.id === categoryId);

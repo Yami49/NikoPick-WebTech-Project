@@ -63,12 +63,13 @@ module.exports = {
   // Suchfunktion
   find: async function (req, res) {
     try {
-      const { name, minPrice, maxPrice } = req.query;
+      const { name, minPrice, maxPrice, category } = req.query;
       const criteria = {};
 
       if (name) criteria.name = { contains: name };
       if (minPrice) criteria.price = { ">=": parseFloat(minPrice) };
       if (maxPrice) criteria.price = { "<=": parseFloat(maxPrice) };
+      if (category) criteria.category = category;
 
       const products = await Product.find({ where: criteria });
       return res.json(products);

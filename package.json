@@ -1,5 +1,16 @@
 {
   "dependencies": {
     "sails-mysql": "^3.0.1"
+  },
+  "devDependencies": {
+    "husky": "^9.1.7",
+    "lint-staged": "^15.2.10",
+    "prettier": "^3.4.2"
+  },
+  "scripts": {
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.{js,vue,css,html}": "prettier --write"
   }
 }

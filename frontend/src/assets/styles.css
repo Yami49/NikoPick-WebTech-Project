@@ -14,12 +14,16 @@ body {
 
 #app {
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Mindestens die volle Höhe des Viewports */
 }
 
 /* Container */
 .container {
   max-width: 1200px;
   padding: 0 0; /* Abstand am Rand */
+  flex: 1;
 }
 
 .flavor-container {

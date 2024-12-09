@@ -28,11 +28,11 @@ body {
 
 /* Geschmaecker*/
 .flavors-section img {
-  width: 100%;          /* Bild nimmt die volle Breite des Containers ein */
-  height: auto;         /* Höhe wird automatisch angepasst, um das Seitenverhältnis zu wahren */
-  display: block;       /* Entfernt zusätzliche Abstände durch Inline-Elemente */
-  margin: 0;            /* Entfernt jeglichen Außenabstand */
-  padding: 0;           /* Entfernt jeglichen Innenabstand */
+  width: 100%; /* Bild nimmt die volle Breite des Containers ein */
+  height: auto; /* Höhe wird automatisch angepasst, um das Seitenverhältnis zu wahren */
+  display: block; /* Entfernt zusätzliche Abstände durch Inline-Elemente */
+  margin: 0; /* Entfernt jeglichen Außenabstand */
+  padding: 0; /* Entfernt jeglichen Innenabstand */
 }
 
 /* Entfernt Ränder und Abstände für die gesamte Sektion */
@@ -54,7 +54,7 @@ body {
   padding: 0;
   border: none;
   display: block; /* Verhindert zusätzliche Abstände durch Inline-Elemente */
-  width: 100%;    /* Stellt sicher, dass die Bilder die volle Breite einnehmen */
+  width: 100%; /* Stellt sicher, dass die Bilder die volle Breite einnehmen */
 }
 
 /* Verhindert Abstände zwischen Zeilen */
@@ -71,14 +71,16 @@ body {
 
 /* Logo */
 .logo {
-  max-width: 100%;    /* Bild wird maximal so breit wie der Container */
-  height: auto;       /* Höhe passt sich automatisch an, um das Seitenverhältnis zu erhalten */
-  display: block;     /* Entfernt zusätzliche Abstände, die durch Inline-Elemente entstehen */
-  margin: 0 auto;     /* Zentriert das Bild innerhalb des Containers */
+  max-width: 100%; /* Bild wird maximal so breit wie der Container */
+  height: auto; /* Höhe passt sich automatisch an, um das Seitenverhältnis zu erhalten */
+  display: block; /* Entfernt zusätzliche Abstände, die durch Inline-Elemente entstehen */
+  margin: 0 auto; /* Zentriert das Bild innerhalb des Containers */
 }
 
 /* Typografie */
-h1, h2, h3 {
+h1,
+h2,
+h3 {
   color: #2c3e50;
   margin-bottom: 20px;
 }
@@ -96,12 +98,12 @@ p {
 
 /* Blauer Hintergrund */
 .blue-bg {
-  background-color: #89CFF0;
+  background-color: #89cff0;
 }
 
 /* Buttons */
 button {
-  background-color: #5899FF;
+  background-color: #5899ff;
   color: white;
   font-family: inherit;
   font-size: 1rem;
@@ -110,16 +112,16 @@ button {
   cursor: pointer;
   padding: 10px 15px;
   transition: background-color 0.3s ease;
-  width: auto;           /* Breite passt sich dem Inhalt an */
+  width: auto; /* Breite passt sich dem Inhalt an */
   display: inline-block; /* Stellt sicher, dass der Button nur so breit wie der Text ist */
 }
 
 button:hover {
-  background-color: #3456A1;
+  background-color: #3456a1;
 }
 
 .costum-button {
-  background-color: #5899FF;
+  background-color: #5899ff;
   border: none;
   color: white;
   padding: 10px 15px;
@@ -129,18 +131,18 @@ button:hover {
 }
 
 .costum-button:hover {
-  background-color: #3456A1; /* Hover-Effekt für den Button */
+  background-color: #3456a1; /* Hover-Effekt für den Button */
 }
 
 /* Links */
 a {
-  color: #5899FF;
+  color: #5899ff;
   text-decoration: none;
   transition: color 0.3s ease;
 }
 
 a:hover {
-  color: #3456A1; /* Hover-Farbe für Links */
+  color: #3456a1; /* Hover-Farbe für Links */
 }
 
 /* Abstände */
@@ -159,8 +161,8 @@ a:hover {
   }
 
   .button {
-    width: 100%;       /* Button nimmt die volle Breite ein */
-    font-size: 1rem;   /* Schriftgröße bleibt gleich */
+    width: 100%; /* Button nimmt die volle Breite ein */
+    font-size: 1rem; /* Schriftgröße bleibt gleich */
     padding: 12px 20px; /* Größeres Padding für bessere Bedienbarkeit */
   }
 }

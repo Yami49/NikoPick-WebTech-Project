@@ -1,17 +1,20 @@
 <template>
   <div id="app">
-    <HeaderComponente /> <!-- Header wird hier eingebunden -->
-    <router-view />      <!-- Geroutete Seite wird hier eingebunden -->
-    <FooterComponente /> <!-- Footer wird hier eingebunden -->
+    <HeaderComponente />
+    <!-- Header wird hier eingebunden -->
+    <router-view />
+    <!-- Geroutete Seite wird hier eingebunden -->
+    <FooterComponente />
+    <!-- Footer wird hier eingebunden -->
   </div>
 </template>
 
 <script>
-import HeaderComponente from './components/HeaderComponente.vue'; // Header importieren
-import FooterComponente from './components/FooterComponente.vue'; // Footer importieren
+import HeaderComponente from "./components/HeaderComponente.vue"; // Header importieren
+import FooterComponente from "./components/FooterComponente.vue"; // Footer importieren
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
     HeaderComponente,
     FooterComponente,

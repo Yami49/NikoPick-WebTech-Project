@@ -1,5 +1,5 @@
-const { defineConfig } = require('@vue/cli-service');
-const webpack = require('webpack');
+const { defineConfig } = require("@vue/cli-service");
+const webpack = require("webpack");
 
 module.exports = defineConfig({
   transpileDependencies: true,
@@ -17,13 +17,11 @@ module.exports = defineConfig({
   // Proxy-Konfiguration für CORS-Probleme
   devServer: {
     proxy: {
-      '/api': {
-        target: 'http://localhost:1337', // URL zu deinem Sails-Backend
+      "/api": {
+        target: "http://localhost:1337", // URL zu deinem Sails-Backend
         changeOrigin: true,
-        pathRewrite: { '^/api': '' },    // Entfernt '/api' aus dem Pfad beim Weiterleiten
+        pathRewrite: { "^/api": "" }, // Entfernt '/api' aus dem Pfad beim Weiterleiten
       },
     },
   },
 });
-
-

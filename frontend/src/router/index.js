@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomePage from "../components/HomePage.vue";
 import ProductManager from "../components/ProductManager.vue";
-import CategoryManager from '../components/CategoryManager.vue';
+import CategoryManager from "../components/CategoryManager.vue";
 
 const routes = [
   {
@@ -17,7 +17,7 @@ const routes = [
   {
     path: "/category",
     name: "CategoryManager",
-    component: CategoryManager
+    component: CategoryManager,
   },
 ];
 

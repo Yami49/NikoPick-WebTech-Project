@@ -73,6 +73,7 @@ form input {
   margin-bottom: 10px;
   width: 100%;
   padding: 8px;
+  border-radius: 8px;
 }
 
 ul {

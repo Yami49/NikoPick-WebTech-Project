@@ -59,9 +59,13 @@
     <!-- Produktliste -->
     <ul>
       <li v-for="p in products" :key="p.id">
-        {{ p.name }} - {{ p.price }}€ - {{ getCategoryName(p.category) }}
-        <button @click="editProduct(p)">Bearbeiten</button>
-        <button @click="deleteProduct(p.id)">Löschen</button>
+        <span>
+          {{ p.name }} - {{ p.price }}€ - {{ getCategoryName(p.category) }}
+        </span>
+        <div class="button-group">
+          <button @click="editProduct(p)">Bearbeiten</button>
+          <button @click="deleteProduct(p.id)">Löschen</button>
+        </div>
       </li>
     </ul>
   </div>
@@ -178,6 +182,7 @@ export default {
   margin-right: 10px;
   padding: 8px;
   width: 150px;
+  border-radius: 8px;
 }
 
 form {
@@ -190,6 +195,7 @@ form select {
   margin-bottom: 10px;
   width: 100%;
   padding: 8px;
+  border-radius: 8px;
 }
 
 ul {
@@ -206,5 +212,10 @@ li {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.button-group {
+  display: flex;
+  gap: 10px; /* Abstand zwischen den Buttons */
 }
 </style>

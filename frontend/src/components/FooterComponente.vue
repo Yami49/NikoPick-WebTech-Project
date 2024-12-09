@@ -4,9 +4,13 @@
       <p>&copy; 2024 Meine Website. Alle Rechte vorbehalten.</p>
       <nav>
         <ul>
-          <li><a href="#privacy">Datenschutz</a></li>
-          <li><a href="#terms">Nutzungsbedingungen</a></li>
-          <li><a href="#contact">Kontakt</a></li>
+          <li><router-link to="/impressum">Impressum</router-link></li>
+          <li>
+            <router-link to="/datenschutzerklaerung"
+              >Datenschutzerklärung</router-link
+            >
+          </li>
+          <li><router-link to="/kontakt">Kontakt</router-link></li>
         </ul>
       </nav>
     </div>

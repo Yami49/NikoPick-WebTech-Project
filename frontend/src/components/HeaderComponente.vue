@@ -55,6 +55,7 @@ export default {
     logout() {
       localStorage.removeItem("token"); // Token aus dem lokalen Speicher entfernen
       eventBus.clearUserRole(); // Setze die Rolle im eventBus zurück
+      window.location.reload(); // Seite neu laden
     },
   },
 };

@@ -25,7 +25,9 @@
         <!-- Anmelden Button -->
         <div class="row justify-content-center mb-4">
           <div class="col-auto">
-            <button class="custom-button">Anmelden und Vorbestellen</button>
+            <button class="custom-button" @click="navigateToProducts">
+              Zu den Produkten
+            </button>
           </div>
         </div>
 
@@ -154,10 +156,15 @@ export default {
       this.errorMessage = this.$route.query.error;
     }
   },
+
   methods: {
     // Navigiert zur SignUp-Seite
     goToSignUpPage() {
       this.$router.push("/documents");
+    },
+
+    navigateToProducts() {
+      this.$router.push("/product");
     },
 
     // Holt die Nachricht vom Backend-API

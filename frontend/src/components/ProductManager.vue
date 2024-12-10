@@ -25,8 +25,8 @@
       <button @click="searchProducts">Suchen</button>
     </div>
 
-    <!-- Formular zum Erstellen/Bearbeiten eines Produkts -->
-    <form @submit.prevent="saveProduct">
+    <!-- Formular zum Erstellen/Bearbeiten eines Produkts (nur für Admins) -->
+    <form @submit.prevent="saveProduct" v-if="userRole === 'admin'">
       <input v-model="product.name" placeholder="Name" required />
       <input v-model="product.description" placeholder="Beschreibung" />
       <input
@@ -62,7 +62,8 @@
         <span>
           {{ p.name }} - {{ p.price }}€ - {{ getCategoryName(p.category) }}
         </span>
-        <div class="button-group">
+        <!-- Buttons nur für Admins anzeigen -->
+        <div class="button-group" v-if="userRole === 'admin'">
           <button @click="editProduct(p)">Bearbeiten</button>
           <button @click="deleteProduct(p.id)">Löschen</button>
         </div>
@@ -73,6 +74,7 @@
 
 <script>
 import api from "@/services/api";
+import { eventBus } from "@/eventBus";
 
 export default {
   data() {
@@ -86,11 +88,13 @@ export default {
       product: { name: "", description: "", price: 0, category: "" },
       isEditing: false,
       editingId: null,
+      userRole: null, // Benutzerrolle hinzufügen
     };
   },
   created() {
     this.fetchProducts();
     this.fetchCategories();
+    this.userRole = eventBus.userRole; // Benutzerrolle aus dem Event-Bus laden
   },
   methods: {
     // Alle Produkte laden
@@ -141,14 +145,12 @@ export default {
         console.error("Fehler beim Speichern des Produkts:", error);
       }
     },
-
     // Produkt zum Bearbeiten laden
     editProduct(product) {
       this.product = { ...product };
       this.isEditing = true;
       this.editingId = product.id;
     },
-
     // Produkt löschen
     async deleteProduct(id) {
       try {
@@ -158,7 +160,6 @@ export default {
         console.error("Fehler beim Löschen des Produkts:", error);
       }
     },
-
     // Formular zurücksetzen
     resetForm() {
       this.product = { name: "", description: "", price: 0, category: "" };

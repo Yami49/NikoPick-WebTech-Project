@@ -40,10 +40,13 @@ module.exports.routes = {
   "POST /api/auth/login": "AuthController.login",
   "POST /api/auth/register": "AuthController.register",
 
+  // UserController
   "GET /api/user/test-connection": "UserController.testConnection",
   "DELETE /api/user/:id": "UserController.deleteUser",
   "GET /api/user": "UserController.find",
 
+  // ContactController
+  "POST /contact/send": "ContactController.send",
   /***************************************************************************
    *                                                                          *
    * More custom routes here...                                               *

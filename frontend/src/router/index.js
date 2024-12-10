@@ -24,6 +24,7 @@ const routes = [
     path: "/category",
     name: "CategoryManager",
     component: CategoryManager,
+    meta: { requiresAdmin: true },
   },
   {
     path: "/impressum",

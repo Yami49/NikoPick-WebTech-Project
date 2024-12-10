@@ -145,6 +145,11 @@ button:hover {
   text-align: center;
 }
 
+.success-message {
+  color: green;
+  margin-top: 15px;
+}
+
 /* Links */
 a {
   color: #5899ff;

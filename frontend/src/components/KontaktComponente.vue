@@ -22,7 +22,7 @@
         <textarea id="message" v-model="message" rows="5" required></textarea>
       </div>
 
-      <button type="submit" class="submit-button">Nachricht senden</button>
+      <button type="submit" class="button">Nachricht senden</button>
 
       <p v-if="successMessage" class="success-message">{{ successMessage }}</p>
       <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
@@ -48,16 +48,17 @@ export default {
   methods: {
     async handleSubmit() {
       try {
-        await api.post("/message/send", {
+        const response = await api.post("/message/send", {
           name: this.name,
           email: this.email,
           phone: this.phone,
           message: this.message,
         });
+        console.log("Antwort des Servers:", response.data);
         this.successMessage = "Nachricht erfolgreich gesendet!";
         this.resetForm();
       } catch (error) {
-        console.error("Fehler beim Senden der Nachricht:", error);
+        console.error("Fehlerdetails:", error.response || error);
         this.errorMessage =
           error.response?.data?.error || "Fehler beim Senden der Nachricht.";
       }
@@ -97,31 +98,5 @@ textarea {
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
-}
-
-.submit-button {
-  background-color: #5899ff;
-  color: white;
-  padding: 10px 15px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  width: 100%;
-  font-size: 1rem;
-  transition: background-color 0.3s ease;
-}
-
-.submit-button:hover {
-  background-color: #3456a1;
-}
-
-.success-message {
-  color: green;
-  margin-top: 15px;
-}
-
-.error-message {
-  color: red;
-  margin-top: 15px;
 }
 </style>

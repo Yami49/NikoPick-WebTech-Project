@@ -48,12 +48,20 @@ export default {
   methods: {
     async handleSubmit() {
       try {
+        console.log("Formular-Daten:", {
+          name: this.name,
+          email: this.email,
+          phone: this.phone,
+          message: this.message,
+        });
+
         const response = await api.post("/message/send", {
           name: this.name,
           email: this.email,
           phone: this.phone,
           message: this.message,
         });
+
         console.log("Antwort des Servers:", response.data);
         this.successMessage = "Nachricht erfolgreich gesendet!";
         this.resetForm();

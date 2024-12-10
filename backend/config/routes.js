@@ -41,6 +41,8 @@ module.exports.routes = {
   "POST /api/auth/register": "AuthController.register",
 
   "GET /api/user/test-connection": "UserController.testConnection",
+  "DELETE /api/user/:id": "UserController.deleteUser",
+  "GET /api/user": "UserController.find",
 
   /***************************************************************************
    *                                                                          *

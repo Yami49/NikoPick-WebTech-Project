@@ -1,14 +1,14 @@
 <template>
   <header class="header">
-    <div class="logo">
+    <div class="logo" @click="navigateHome" style="cursor: pointer">
       <img src="@/assets/images/nikopick-logo.jpeg" alt="App Logo" />
     </div>
 
     <!-- Rolle anzeigen, wenn der Benutzer eingeloggt ist -->
     <nav>
-      <span v-if="eventBus.userRole"
-        >Eingeloggt als {{ eventBus.userRole }}</span
-      >
+      <span v-if="eventBus.userRole">
+        Eingeloggt als {{ eventBus.userRole }}
+      </span>
     </nav>
 
     <!-- Abmelden-Button anzeigen, wenn der Benutzer eingeloggt ist -->
@@ -36,17 +36,25 @@ export default {
   created() {
     const token = localStorage.getItem("token");
     if (token) {
-      const payload = JSON.parse(atob(token.split(".")[1]));
-      this.userRole = payload.role;
+      try {
+        const payload = JSON.parse(atob(token.split(".")[1]));
+        eventBus.userRole = payload.role; // Setze die Rolle direkt im eventBus
+      } catch (error) {
+        console.error("Fehler beim Dekodieren des Tokens:", error);
+        eventBus.userRole = null;
+      }
     }
   },
   methods: {
     navigateSignin() {
       this.$router.push("/signin");
     },
+    navigateHome() {
+      this.$router.push("/");
+    },
     logout() {
       localStorage.removeItem("token"); // Token aus dem lokalen Speicher entfernen
-      eventBus.clearUserRole();
+      eventBus.clearUserRole(); // Setze die Rolle im eventBus zurück
     },
   },
 };

@@ -3,6 +3,7 @@
     <div class="grey-bg">
       <div class="container">
         <h1>{{ message }}</h1>
+        <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
         <!-- Überschrift -->
         <div class="row justify-content-center mb-4">
           <div class="col-md-12 text-center">
@@ -149,6 +150,9 @@ export default {
   },
   created() {
     this.fetchMessage(); // API-Daten beim Erstellen der Komponente laden
+    if (this.$route.query.error) {
+      this.errorMessage = this.$route.query.error;
+    }
   },
   methods: {
     // Navigiert zur SignUp-Seite

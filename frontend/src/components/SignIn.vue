@@ -15,6 +15,14 @@
       <button type="submit">Anmelden</button>
 
       <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
+
+      <!-- Link zur Registrierungsseite -->
+      <p class="register-link">
+        Noch kein Konto?
+        <button type="button" @click="navigateRegister">
+          Jetzt registrieren
+        </button>
+      </p>
     </form>
   </div>
 </template>
@@ -53,6 +61,9 @@ export default {
           error.response?.data?.error || "Anmeldung fehlgeschlagen.";
       }
     },
+    navigateRegister() {
+      this.$router.push("/register");
+    },
   },
 };
 </script>
@@ -80,5 +91,39 @@ input {
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
+}
+
+button {
+  background-color: #5899ff;
+  color: white;
+  font-family: inherit;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 10px 15px;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #3456a1;
+}
+
+.register-link {
+  text-align: center;
+  margin-top: 15px;
+}
+
+.register-link button {
+  background: none;
+  color: #5899ff;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  text-decoration: underline;
+}
+
+.register-link button:hover {
+  color: #3456a1;
 }
 </style>

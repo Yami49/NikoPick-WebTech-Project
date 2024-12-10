@@ -45,8 +45,10 @@ module.exports.routes = {
   "DELETE /api/user/:id": "UserController.deleteUser",
   "GET /api/user": "UserController.find",
 
-  // ContactController
-  "POST /contact/send": "ContactController.send",
+  "POST /message/send": "MessageController.send",
+  "GET /message": "MessageController.getAll",
+  "DELETE /message/:id": "MessageController.delete",
+
   /***************************************************************************
    *                                                                          *
    * More custom routes here...                                               *

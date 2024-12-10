@@ -8,6 +8,7 @@ import KontaktComponente from "../components/KontaktComponente.vue";
 import SignIn from "../components/SignIn.vue";
 import RegisterComponente from "../components/RegisterComponente.vue";
 import UserList from "@/components/UserList.vue";
+import MessageList from "@/components/MessageList.vue";
 
 const routes = [
   {
@@ -55,6 +56,12 @@ const routes = [
     path: "/users",
     name: "UserList",
     component: UserList,
+    meta: { requiresAdmin: true }, // Meta-Flag für Admin-Zugriff
+  },
+  {
+    path: "/message",
+    name: "MessageList",
+    component: MessageList,
     meta: { requiresAdmin: true }, // Meta-Flag für Admin-Zugriff
   },
 ];

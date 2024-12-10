@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1>Kontakt</h1>
+    <h1>Kontaktformular</h1>
     <form @submit.prevent="handleSubmit">
       <div class="form-group">
         <label for="name">Name</label>
@@ -31,10 +31,10 @@
 </template>
 
 <script>
-import api from "@/services/api"; // Dein API-Service für Backend-Anfragen
+import api from "@/services/api";
 
 export default {
-  name: "KontaktComponente",
+  name: "ContactComponente",
   data() {
     return {
       name: "",
@@ -48,7 +48,7 @@ export default {
   methods: {
     async handleSubmit() {
       try {
-        await api.post("/contact/send", {
+        await api.post("/message/send", {
           name: this.name,
           email: this.email,
           phone: this.phone,
@@ -57,11 +57,12 @@ export default {
         this.successMessage = "Nachricht erfolgreich gesendet!";
         this.resetForm();
       } catch (error) {
-        this.errorMessage =
-          "Fehler beim Senden der Nachricht. Bitte versuchen Sie es erneut.";
         console.error("Fehler beim Senden der Nachricht:", error);
+        this.errorMessage =
+          error.response?.data?.error || "Fehler beim Senden der Nachricht.";
       }
     },
+
     resetForm() {
       this.name = "";
       this.email = "";
@@ -75,13 +76,6 @@ export default {
 <style src="../assets/styles.css"></style>
 
 <style scoped>
-.container {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 20px;
-  font-family: Arial, sans-serif;
-}
-
 h1 {
   text-align: center;
   margin-bottom: 20px;

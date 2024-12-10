@@ -5,6 +5,8 @@ import CategoryManager from "../components/CategoryManager.vue";
 import ImpressumComponente from "../components/ImpressumComponente.vue";
 import DatenschutzErklaerung from "../components/DatenschutzErklaerung.vue";
 import KontaktComponente from "../components/KontaktComponente.vue";
+import SignIn from "../components/SignIn.vue";
+import RegisterComponente from "../components/RegisterComponente.vue";
 
 const routes = [
   {
@@ -32,7 +34,21 @@ const routes = [
     name: "DatenschutzErklaerung",
     component: DatenschutzErklaerung,
   },
-  { path: "/kontakt", name: "KontaktComponente", component: KontaktComponente },
+  {
+    path: "/kontakt",
+    name: "KontaktComponente",
+    component: KontaktComponente,
+  },
+  {
+    path: "/signin",
+    name: "SignIn",
+    component: SignIn,
+  },
+  {
+    path: "/register",
+    name: "RegisterComponente",
+    component: RegisterComponente,
+  },
 ];
 
 const router = createRouter({

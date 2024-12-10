@@ -36,6 +36,12 @@ module.exports.routes = {
   "GET /api/categories": "CategoryController.findAll",
   "DELETE /api/categories/:id": "CategoryController.delete",
 
+  /** AuthController */
+  "POST /api/auth/login": "AuthController.login",
+  "POST /api/auth/register": "AuthController.register",
+
+  "GET /api/user/test-connection": "UserController.testConnection",
+
   /***************************************************************************
    *                                                                          *
    * More custom routes here...                                               *
@@ -46,4 +52,11 @@ module.exports.routes = {
    * not match any of those, it is matched against static assets.             *
    *                                                                          *
    ***************************************************************************/
+
+  "GET /api/admin/dashboard": {
+    controller: "AdminController",
+    action: "dashboard",
+    policy: "isAuthenticated",
+    policy: "isAdmin",
+  },
 };

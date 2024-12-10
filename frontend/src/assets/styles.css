@@ -139,6 +139,12 @@ button:hover {
   background-color: #3456a1; /* Hover-Effekt für den Button */
 }
 
+.error-message {
+  color: red;
+  margin-top: 10px;
+  text-align: center;
+}
+
 /* Links */
 a {
   color: #5899ff;

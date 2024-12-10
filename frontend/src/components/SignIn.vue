@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h2>Sign In</h2>
+    <h2>Anmelden</h2>
     <form @submit.prevent="handleSignIn">
       <div class="form-group">
         <label for="email">E-Mail</label>
@@ -16,19 +16,14 @@
 
       <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
     </form>
-
-    <p class="register-link">
-      Noch kein Konto?
-      <router-link to="/register">Hier registrieren</router-link>
-    </p>
   </div>
 </template>
 
 <script>
 import api from "@/services/api";
+import { eventBus } from "@/eventBus";
 
 export default {
-  name: "SignIn",
   data() {
     return {
       email: "",
@@ -43,11 +38,19 @@ export default {
           email: this.email,
           password: this.password,
         });
+
+        // Token speichern
         localStorage.setItem("token", response.data.token);
+
+        // Rolle im Event-Bus setzen
+        const payload = JSON.parse(atob(response.data.token.split(".")[1]));
+        eventBus.setUserRole(payload.role);
+
+        // Zur Homepage weiterleiten
         this.$router.push("/");
       } catch (error) {
         this.errorMessage =
-          error.response?.data?.error || "Anmeldung fehlgeschlagen";
+          error.response?.data?.error || "Anmeldung fehlgeschlagen.";
       }
     },
   },

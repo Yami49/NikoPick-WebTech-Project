@@ -18,14 +18,6 @@
       ></textarea>
       <button type="submit">Nachricht senden</button>
     </form>
-
-    <h2>Eingegangene Nachrichten</h2>
-    <ul>
-      <li v-for="msg in messages" :key="msg.id">
-        <strong>{{ msg.name }} ({{ msg.email }}):</strong>
-        <p>{{ msg.message }}</p>
-      </li>
-    </ul>
   </div>
 </template>
 

@@ -28,10 +28,15 @@ module.exports = {
   // Read one
   findOne: async function (req, res) {
     try {
-      const product = await Product.findOne({ id: req.params.id });
+      const productId = req.params.id;
+      const product = await Product.findOne({ id: productId });
+      if (!product) {
+        return res.status(404).json({ error: "Produkt nicht gefunden." });
+      }
       return res.json(product);
     } catch (error) {
-      return res.serverError(error);
+      console.error("Fehler beim Laden des Produkts:", error);
+      return res.status(500).json({ error: "Fehler beim Laden des Produkts." });
     }
   },
 

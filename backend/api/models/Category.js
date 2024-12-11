@@ -1,6 +1,15 @@
 module.exports = {
   attributes: {
-    name: { type: "string", required: true },
-    products: { collection: "product", via: "category" },
+    name: {
+      type: "string",
+      required: true,
+    },
+    description: {
+      type: "string",
+    },
+    products: {
+      collection: "product",
+      via: "category",
+    },
   },
 };

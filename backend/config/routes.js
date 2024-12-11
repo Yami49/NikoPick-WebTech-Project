@@ -30,6 +30,7 @@ module.exports.routes = {
   "PUT /api/products/:id": "ProductController.update",
   "DELETE /api/products/:id": "ProductController.delete",
   "GET /api/products/search": "ProductController.find",
+  "GET /products/:id": "ProductController.findOne",
 
   /* CategoryController */
   "POST /api/categories": "CategoryController.create",

@@ -1,32 +1,31 @@
 <template>
   <div class="container">
     <h1>Kontaktformular</h1>
-    <form @submit.prevent="handleSubmit">
-      <div class="form-group">
-        <label for="name">Name</label>
-        <input type="text" id="name" v-model="name" required />
-      </div>
 
-      <div class="form-group">
-        <label for="email">E-Mail</label>
-        <input type="email" id="email" v-model="email" required />
-      </div>
-
-      <div class="form-group">
-        <label for="phone">Telefonnummer</label>
-        <input type="tel" id="phone" v-model="phone" required />
-      </div>
-
-      <div class="form-group">
-        <label for="message">Nachricht</label>
-        <textarea id="message" v-model="message" rows="5" required></textarea>
-      </div>
-
-      <button type="submit" class="button">Nachricht senden</button>
-
-      <p v-if="successMessage" class="success-message">{{ successMessage }}</p>
-      <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
+    <!-- Kontaktformular -->
+    <form @submit.prevent="sendMessage">
+      <input v-model="form.name" placeholder="Ihr Name" required />
+      <input
+        v-model="form.email"
+        type="email"
+        placeholder="Ihre E-Mail"
+        required
+      />
+      <textarea
+        v-model="form.message"
+        placeholder="Ihre Nachricht"
+        required
+      ></textarea>
+      <button type="submit">Nachricht senden</button>
     </form>
+
+    <h2>Eingegangene Nachrichten</h2>
+    <ul>
+      <li v-for="msg in messages" :key="msg.id">
+        <strong>{{ msg.name }} ({{ msg.email }}):</strong>
+        <p>{{ msg.message }}</p>
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -37,46 +36,36 @@ export default {
   name: "ContactComponente",
   data() {
     return {
-      name: "",
-      email: "",
-      phone: "",
-      message: "",
-      successMessage: "",
-      errorMessage: "",
+      form: {
+        name: "",
+        email: "",
+        message: "",
+      },
+      messages: [],
     };
   },
+  created() {
+    this.fetchMessages();
+  },
   methods: {
-    async handleSubmit() {
+    // Nachricht senden
+    async sendMessage() {
       try {
-        console.log("Formular-Daten:", {
-          name: this.name,
-          email: this.email,
-          phone: this.phone,
-          message: this.message,
-        });
-
-        const response = await api.post("/message/send", {
-          name: this.name,
-          email: this.email,
-          phone: this.phone,
-          message: this.message,
-        });
-
-        console.log("Antwort des Servers:", response.data);
-        this.successMessage = "Nachricht erfolgreich gesendet!";
-        this.resetForm();
+        await api.post("/messages", this.form);
+        this.form = { name: "", email: "", message: "" };
+        this.fetchMessages();
       } catch (error) {
-        console.error("Fehlerdetails:", error.response || error);
-        this.errorMessage =
-          error.response?.data?.error || "Fehler beim Senden der Nachricht.";
+        console.error("Fehler beim Senden der Nachricht:", error);
       }
     },
-
-    resetForm() {
-      this.name = "";
-      this.email = "";
-      this.phone = "";
-      this.message = "";
+    // Alle Nachrichten abrufen
+    async fetchMessages() {
+      try {
+        const response = await api.get("/messages");
+        this.messages = response.data;
+      } catch (error) {
+        console.error("Fehler beim Laden der Nachrichten:", error);
+      }
     },
   },
 };
@@ -85,6 +74,15 @@ export default {
 <style src="../assets/styles.css"></style>
 
 <style scoped>
+form input,
+form textarea {
+  display: block;
+  margin-bottom: 10px;
+  width: 100%;
+  padding: 8px;
+  border-radius: 5px;
+}
+
 h1 {
   text-align: center;
   margin-bottom: 20px;
@@ -98,13 +96,5 @@ label {
   display: block;
   margin-bottom: 5px;
   font-weight: bold;
-}
-
-input,
-textarea {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
 }
 </style>

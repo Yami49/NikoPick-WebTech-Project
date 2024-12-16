@@ -29,7 +29,9 @@
 
 ## Einführung
 
-Dieses Projekt ermöglicht es, Kategorien zu erstellen, anzuzeigen und zu löschen. Das Backend verwendet **Node.js** und **Sails.js**, während das Frontend auf **Vue.js** basiert.
+ Das Backend verwendet **Node.js** und **Sails.js**, während das Frontend auf **Vue.js** basiert.
+
+ In den folgenden Kapitel, werden die Controller erklärt.
 
 ---
 

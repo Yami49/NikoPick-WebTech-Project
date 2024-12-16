@@ -10,6 +10,7 @@ import RegisterComponente from "../components/RegisterComponente.vue";
 import UserList from "@/components/UserList.vue";
 import MessageList from "@/components/MessageList.vue";
 import ProductDetail from "@/components/ProductDetail.vue";
+import TransactionManager from "@/components/TransactionManager.vue";
 
 const routes = [
   {
@@ -69,6 +70,11 @@ const routes = [
     path: "/products/:id",
     name: "ProductDetail",
     component: ProductDetail,
+  },
+  {
+    path: "/transactions",
+    name: "TransactionManager",
+    component: TransactionManager,
   },
 ];
 

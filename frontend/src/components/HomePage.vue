@@ -72,7 +72,11 @@
         <div class="col-md-6 blue-bg center">
           <div class="content">
             <p class="headline"><span class="underline">MINT</span> NIKOPICK</p>
-            <p class="subtext">Entdecken Sie die Innovation von NikoPick.</p>
+            <p class="subtext">
+              Ein kühler, erfrischender Minzgeschmack, der den Mund belebt und
+              für langanhaltende Frische sorgt – dezent und angenehm im
+              Hintergrund
+            </p>
           </div>
         </div>
         <!-- Lemon -->
@@ -84,7 +88,11 @@
             <p class="headline">
               <span class="underline">Lemon</span> NIKOPICK
             </p>
-            <p class="subtext">Entdecken Sie die Innovation von NikoPick.</p>
+            <p class="subtext">
+              Ein spritziger Zitronengeschmack, der frisch und belebend wirkt –
+              mit einer angenehmen, dezenten Säurenote für einen klaren,
+              erfrischenden Kick.
+            </p>
           </div>
         </div>
         <div class="col-md-6 gray-bg text-center">
@@ -103,7 +111,10 @@
         >
           <div class="content">
             <p class="headline"><span class="underline">Herb</span> NIKOPICK</p>
-            <p class="subtext">Entdecken Sie die Innovation von NikoPick.</p>
+            <p class="subtext">
+              Ein würziger, erdiger Geschmack mit leicht bitteren Noten –
+              kräftig und natürlich, für ein angenehm herbes Erlebnis.
+            </p>
           </div>
         </div>
         <!-- Strong -->
@@ -115,7 +126,10 @@
             <p class="headline">
               <span class="underline">Strong</span> NIKOPICK
             </p>
-            <p class="subtext">Entdecken Sie die Innovation von NikoPick.</p>
+            <p class="subtext">
+              Ein intensiver, markanter Geschmack mit kräftigem Kick – stark und
+              direkt, für ein besonders energisches Erlebnis.
+            </p>
           </div>
         </div>
         <div class="col-md-6 gray-bg text-center">

@@ -42,7 +42,8 @@ body {
 /* Entfernt Ränder und Abstände für die gesamte Sektion */
 .columForTwo {
   margin: 0;
-  padding: 0;
+  padding-left: 80px;
+  padding-right: 80px;
 }
 
 /* Entfernt Ränder und Abstände für die Spalten */

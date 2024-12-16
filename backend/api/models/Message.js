@@ -9,6 +9,10 @@ module.exports = {
       required: true,
       isEmail: true,
     },
+    phone: {
+      type: "string",
+      allowNull: true, // Telefonnummer ist optional
+    },
     message: {
       type: "string",
       required: true,

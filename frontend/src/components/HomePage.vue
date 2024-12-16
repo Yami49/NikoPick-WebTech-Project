@@ -69,18 +69,23 @@
         <div class="col-md-6 gray-bg text-center">
           <img src="@/assets/images/blue-nikopick.png" alt="Mint NikoPick" />
         </div>
-        <div
-          class="col-md-6 black-bg text-center"
-          style="background-color: blue"
-        >
-          <p class="headline">MINT NIKOPICK</p>
+        <div class="col-md-6 blue-bg center">
+          <div class="content">
+            <p class="headline"><span class="underline">MINT</span> NIKOPICK</p>
+            <p class="subtext">Entdecken Sie die Innovation von NikoPick.</p>
+          </div>
         </div>
         <!-- Lemon -->
         <div
-          class="col-md-6 black-bg text-center"
+          class="col-md-6 black-bg text-center center"
           style="background-color: yellow"
         >
-          <p class="headline">LEMON NIKOPICK</p>
+          <div class="content">
+            <p class="headline">
+              <span class="underline">Lemon</span> NIKOPICK
+            </p>
+            <p class="subtext">Entdecken Sie die Innovation von NikoPick.</p>
+          </div>
         </div>
         <div class="col-md-6 gray-bg text-center">
           <img src="@/assets/images/yellow-nikopick.png" alt="Lemon NikoPick" />
@@ -93,17 +98,25 @@
           <img src="@/assets/images/green-nikopick.png" alt="Herb NikoPick" />
         </div>
         <div
-          class="col-md-6 black-bg text-center"
+          class="col-md-6 black-bg text-center center"
           style="background-color: green"
         >
-          <p class="headline">HERB NIKOPICK</p>
+          <div class="content">
+            <p class="headline"><span class="underline">Herb</span> NIKOPICK</p>
+            <p class="subtext">Entdecken Sie die Innovation von NikoPick.</p>
+          </div>
         </div>
         <!-- Strong -->
         <div
-          class="col-md-6 black-bg text-center"
+          class="col-md-6 black-bg text-center center"
           style="background-color: red"
         >
-          <p class="headline">STRONG NIKOPICK</p>
+          <div class="content">
+            <p class="headline">
+              <span class="underline">Strong</span> NIKOPICK
+            </p>
+            <p class="subtext">Entdecken Sie die Innovation von NikoPick.</p>
+          </div>
         </div>
         <div class="col-md-6 gray-bg text-center">
           <img src="@/assets/images/red-nikopick.png" alt="Strong NikoPick" />
@@ -181,3 +194,39 @@ export default {
 </script>
 
 <style src="../assets/styles.css"></style>
+
+<style>
+.center {
+  display: flex;
+  justify-content: center; /* Horizontal zentrieren */
+  align-items: center; /* Vertikal zentrieren */
+  padding: 20px;
+  text-align: center;
+}
+/* Inhalt innerhalb des blauen Bereichs */
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Überschrift */
+.headline {
+  font-size: 2rem;
+  margin: 0;
+}
+
+/* Unterstrich für das Wort "MINT" */
+.headline .underline {
+  text-decoration: underline;
+}
+
+/* Zusätzlicher Text */
+.subtext {
+  font-size: 1.2rem;
+  margin-top: 10px;
+  max-width: 80%;
+  text-align: center;
+}
+</style>

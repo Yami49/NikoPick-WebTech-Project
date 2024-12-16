@@ -46,8 +46,9 @@ module.exports.routes = {
   "DELETE /api/user/:id": "UserController.deleteUser",
   "GET /api/user": "UserController.find",
 
-  "POST /api/messages": "MessageController.create",
-  "GET /api/messages": "MessageController.findAll",
+  "POST /api/message": "MessageController.create",
+  "GET /api/message": "MessageController.findAll",
+  "DELETE /api/message": "MessageController.delete",
 
   "POST /transactions": "TransactionController.create",
   "GET /transactions": "TransactionController.findAll",

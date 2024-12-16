@@ -11,6 +11,7 @@
         placeholder="Ihre E-Mail"
         required
       />
+      <input v-model="form.phone" type="tel" placeholder="Ihre Telefonnummer" />
       <textarea
         v-model="form.message"
         placeholder="Ihre Nachricht"
@@ -18,6 +19,9 @@
       ></textarea>
       <button type="submit">Nachricht senden</button>
     </form>
+
+    <!-- Erfolgsnachricht -->
+    <p v-if="successMessage" class="success-message">{{ successMessage }}</p>
   </div>
 </template>
 
@@ -31,32 +35,24 @@ export default {
       form: {
         name: "",
         email: "",
+        phone: "",
         message: "",
       },
-      messages: [],
+      successMessage: "",
     };
-  },
-  created() {
-    this.fetchMessages();
   },
   methods: {
     // Nachricht senden
     async sendMessage() {
       try {
-        await api.post("/messages", this.form);
-        this.form = { name: "", email: "", message: "" };
-        this.fetchMessages();
+        await api.post("/message", this.form); // API-Aufruf zum Senden der Nachricht
+        this.successMessage = "Ihre Nachricht wurde erfolgreich gesendet!";
+        this.form = { name: "", email: "", phone: "", message: "" };
+        setTimeout(() => {
+          this.successMessage = "";
+        }, 5000);
       } catch (error) {
         console.error("Fehler beim Senden der Nachricht:", error);
-      }
-    },
-    // Alle Nachrichten abrufen
-    async fetchMessages() {
-      try {
-        const response = await api.get("/messages");
-        this.messages = response.data;
-      } catch (error) {
-        console.error("Fehler beim Laden der Nachrichten:", error);
       }
     },
   },
@@ -73,6 +69,7 @@ form textarea {
   width: 100%;
   padding: 8px;
   border-radius: 5px;
+  border: 1px solid #ccc;
 }
 
 h1 {
@@ -80,13 +77,10 @@ h1 {
   margin-bottom: 20px;
 }
 
-.form-group {
-  margin-bottom: 15px;
-}
-
-label {
-  display: block;
-  margin-bottom: 5px;
+.success-message {
+  margin-top: 15px;
+  color: #28a745;
   font-weight: bold;
+  text-align: center;
 }
 </style>

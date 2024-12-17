@@ -2,45 +2,62 @@
 
 .header {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-between; /* Linker und rechter Container auseinanderziehen */
   align-items: center;
   padding: 20px;
   background-color: #a0d9ed;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Schatten für einen eleganten Look */
-  flex-wrap: wrap;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-/* Logo-Stil */
-.logo {
+/* Linker Container für das Logo */
+.header-left {
   display: flex;
   align-items: center;
-  margin-left: auto;
 }
 
-/* Logo-Bild-Stil */
 .logo img {
-  height: 50px; /* Maximale Höhe des Logos */
-  width: auto; /* Beibehaltung des Seitenverhältnisses */
-  display: block;
+  height: 50px; /* Größe des Logos */
+  width: auto;
 }
 
-nav {
+/* Rechter Container für die Navigationselemente */
+.header-right {
   display: flex;
-  gap: 10px; /* Abstand zwischen Navigationselementen */
+  align-items: center;
+  gap: 20px; /* Abstand zwischen den Elementen */
 }
 
-.header-button {
-  background-color: #5899ff;
+/* Burger-Menü-Stil */
+.burger-button {
+  background-color: transparent;
   border: none;
-  color: white;
-  padding: 10px 15px;
-  border-radius: 5px;
+  font-size: 1.5rem;
   cursor: pointer;
-  transition: background-color 0.3s ease;
 }
 
-.header-button:hover {
-  background-color: #3456a1; /* Hover-Effekt für den Button */
+.menu-dropdown {
+  position: absolute;
+  top: 60px;
+  right: 20px;
+  background-color: white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  z-index: 1000;
+}
+
+.menu-dropdown ul {
+  list-style: none;
+  margin: 0;
+  padding: 10px;
+}
+
+.menu-dropdown li {
+  padding: 10px 15px;
+  cursor: pointer;
+}
+
+.menu-dropdown li:hover {
+  background-color: #f0f0f0;
 }
 
 /* Responsiver Header */

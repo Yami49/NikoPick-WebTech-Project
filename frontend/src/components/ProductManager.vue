@@ -62,13 +62,16 @@
         <span>
           {{ p.name }} - {{ p.price }}€ - {{ getCategoryName(p.category) }}
         </span>
-        <!-- Buttons nur für Admins anzeigen -->
-        <router-link :to="`/products/${p.id}`">
-          <button>Ansehen</button>
-        </router-link>
-        <div class="button-group" v-if="userRole === 'admin'">
-          <button @click="editProduct(p)">Bearbeiten</button>
-          <button @click="deleteProduct(p.id)">Löschen</button>
+
+        <div class="button-group">
+          <router-link :to="`/products/${p.id}`">
+            <button>Ansehen</button>
+          </router-link>
+          <!-- Buttons nur für Admins anzeigen -->
+          <div class="button-group" v-if="userRole === 'admin'">
+            <button @click="editProduct(p)">Bearbeiten</button>
+            <button @click="deleteProduct(p.id)">Löschen</button>
+          </div>
         </div>
       </li>
     </ul>

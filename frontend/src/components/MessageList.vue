@@ -12,6 +12,7 @@
         :key="msg.id"
         class="message-card"
         @click="goToMessageDetail(msg.id)"
+        style="cursor: pointer"
       >
         <div class="message-header">
           <h2>{{ msg.name }}</h2>

@@ -7,7 +7,12 @@
     </div>
 
     <ul class="message-list">
-      <li v-for="msg in messages" :key="msg.id" class="message-card">
+      <li
+        v-for="msg in messages"
+        :key="msg.id"
+        class="message-card"
+        @click="goToMessageDetail(msg.id)"
+      >
         <div class="message-header">
           <h2>{{ msg.name }}</h2>
           <p class="email">{{ msg.email }}</p>
@@ -56,6 +61,9 @@ export default {
           console.error("Fehler beim Löschen der Nachricht:", error);
         }
       }
+    },
+    goToMessageDetail(id) {
+      this.$router.push(`/message/${id}`);
     },
   },
 };

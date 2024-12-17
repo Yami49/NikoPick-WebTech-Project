@@ -9,6 +9,7 @@ import SignIn from "../components/SignIn.vue";
 import RegisterComponente from "../components/RegisterComponente.vue";
 import UserList from "@/components/UserList.vue";
 import MessageList from "@/components/MessageList.vue";
+import MessageDetail from "@/components/MessageDetail.vue";
 import ProductDetail from "@/components/ProductDetail.vue";
 import TransactionManager from "@/components/TransactionManager.vue";
 
@@ -65,6 +66,12 @@ const routes = [
     name: "MessageList",
     component: MessageList,
     meta: { requiresAdmin: true }, // Meta-Flag für Admin-Zugriff
+  },
+  {
+    path: "/message/:id",
+    name: "MessageDetail",
+    component: MessageDetail,
+    props: true,
   },
   {
     path: "/products/:id",

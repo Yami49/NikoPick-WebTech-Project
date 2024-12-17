@@ -49,6 +49,7 @@ module.exports.routes = {
   "POST /api/message": "MessageController.create",
   "GET /api/message": "MessageController.findAll",
   "DELETE /api/message": "MessageController.delete",
+  "GET /api/message/:id": "MessageController.findOne",
 
   "POST /transactions": "TransactionController.create",
   "GET /transactions": "TransactionController.findAll",

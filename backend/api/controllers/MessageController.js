@@ -28,6 +28,18 @@ module.exports = {
     }
   },
 
+  findOne: async function (req, res) {
+    try {
+      const message = await Message.findOne({ id: req.params.id });
+      if (!message) {
+        return res.notFound({ error: "Nachricht nicht gefunden." });
+      }
+      return res.json(message);
+    } catch (error) {
+      return res.serverError(error);
+    }
+  },
+
   delete: async function (req, res) {
     try {
       const { id } = req.body; // Die ID aus dem Request-Body extrahieren

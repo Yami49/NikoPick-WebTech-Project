@@ -57,12 +57,12 @@
       </div>
     </div>
 
-    <div class="flavor-container">
-      <!-- Geschmacksrichtungen -->
-      <div class="flavors-section">
-        <img src="@/assets/images/geschmaecker.png" alt="Geschmäcker" />
-      </div>
+    <!-- Geschmacksrichtungen -->
+    <div class="flavors-section grey-bg">
+      <img src="@/assets/images/geschmaecker.png" alt="Geschmäcker" />
+    </div>
 
+    <div class="flavor-container grey-bg">
       <!-- Nikopick Varianten -->
       <div class="row columForTwo">
         <!-- Mint -->
@@ -157,12 +157,9 @@
         </div>
       </div>
     </div>
-
-    <div class="flavor-container">
-      <!-- Warnung -->
-      <div class="row flavors-section">
-        <img src="@/assets/images/warnung.png" alt="Warnung" />
-      </div>
+    <!-- Warnung -->
+    <div class="flavors-section">
+      <img src="@/assets/images/warnung.png" alt="Warnung" />
     </div>
   </main>
 </template>
@@ -175,6 +172,7 @@ export default {
   data() {
     return {
       message: "", // Für den API-Text
+      errorMessage: "",
     };
   },
   created() {

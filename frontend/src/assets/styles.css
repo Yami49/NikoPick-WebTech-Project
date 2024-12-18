@@ -32,11 +32,12 @@ body {
 
 /* Geschmaecker*/
 .flavors-section img {
-  width: 100%; /* Bild nimmt die volle Breite des Containers ein */
+  width: 40%; /* Bild nimmt die volle Breite des Containers ein */
   height: auto; /* Höhe wird automatisch angepasst, um das Seitenverhältnis zu wahren */
   display: block; /* Entfernt zusätzliche Abstände durch Inline-Elemente */
   margin: 0; /* Entfernt jeglichen Außenabstand */
   padding: 0; /* Entfernt jeglichen Innenabstand */
+  justify-self: center;
 }
 
 /* Entfernt Ränder und Abstände für die gesamte Sektion */

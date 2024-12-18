@@ -17,14 +17,6 @@
         <input type="password" id="password" v-model="password" required />
       </div>
 
-      <div class="form-group">
-        <label for="role">Rolle</label>
-        <select id="role" v-model="role" required>
-          <option value="user">Benutzer</option>
-          <option value="admin">Admin</option>
-        </select>
-      </div>
-
       <button type="submit">Registrieren</button>
 
       <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
@@ -58,7 +50,7 @@ export default {
           username: this.username,
           email: this.email,
           password: this.password,
-          role: this.role,
+          role: "user",
         });
 
         this.successMessage =

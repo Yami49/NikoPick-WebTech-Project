@@ -28,6 +28,12 @@
               Categories
             </li>
             <li
+              v-if="eventBus.userRole === 'admin'"
+              @click="navigateTo('/users')"
+            >
+              Benutzerliste
+            </li>
+            <li
               v-if="eventBus.userRole === 'user'"
               @click="navigateTo('/cart')"
             >

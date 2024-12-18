@@ -35,4 +35,46 @@ module.exports = {
         .json({ error: "Fehler beim Löschen des Benutzers" });
     }
   },
+  // Benutzer aktualisieren
+  update: async function (req, res) {
+    try {
+      const { id } = req.params;
+      const { username, email, role } = req.body;
+
+      const updatedUser = await User.updateOne({ id }).set({
+        username,
+        email,
+        role,
+      });
+
+      if (!updatedUser) {
+        return res.notFound({ error: "Benutzer nicht gefunden." });
+      }
+
+      return res.json(updatedUser);
+    } catch (error) {
+      return res.serverError({
+        error: "Fehler beim Aktualisieren des Benutzers.",
+        details: error,
+      });
+    }
+  },
+  // Benutzer anhand der ID finden
+  findOne: async function (req, res) {
+    try {
+      const { id } = req.params;
+      const user = await User.findOne({ id });
+
+      if (!user) {
+        return res.notFound({ error: "Benutzer nicht gefunden." });
+      }
+
+      return res.json(user);
+    } catch (error) {
+      return res.serverError({
+        error: "Fehler beim Laden des Benutzers.",
+        details: error,
+      });
+    }
+  },
 };

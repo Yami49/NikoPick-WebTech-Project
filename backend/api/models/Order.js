@@ -1,7 +1,11 @@
+const { primaryKey } = require("./User");
+
 module.exports = {
+  primaryKey: "orderId",
   attributes: {
     orderId: {
       type: "number",
+      autoIncrement: true,
       unique: true,
     },
     date: { type: "ref", columnType: "datetime" },

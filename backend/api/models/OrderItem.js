@@ -1,7 +1,11 @@
+const { primaryKey } = require("./User");
+
 module.exports = {
+  primaryKey: "orderItemId",
   attributes: {
     orderItemId: {
       type: "number",
+      autoIncrement: true,
       unique: true,
     },
     quantity: {

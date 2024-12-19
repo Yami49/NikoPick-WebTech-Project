@@ -1,5 +1,13 @@
+const { primaryKey } = require("./User");
+
 module.exports = {
+  primaryKey: "transactionId",
   attributes: {
+    transactionId: {
+      type: "number",
+      autoIncrement: true,
+      unique: true,
+    },
     customerName: {
       type: "string",
       required: true,

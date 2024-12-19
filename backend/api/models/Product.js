@@ -1,6 +1,9 @@
+const { primaryKey } = require("./User");
+
 module.exports = {
+  primaryKey: "productId",
   attributes: {
-    productId: { type: "number", unique: true },
+    productId: { type: "number", autoIncrement: true, unique: true },
     name: { type: "string" },
     description: { type: "string" },
     price: { type: "number" },

@@ -2,6 +2,9 @@
   <div class="container">
     <h1>Kategorien verwalten</h1>
 
+    <!-- Fehlermeldung -->
+    <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
+
     <!-- Formular zum Erstellen einer Kategorie -->
     <form @submit.prevent="saveCategory">
       <input v-model="category.name" placeholder="Kategorie-Name" required />
@@ -30,6 +33,7 @@ export default {
     return {
       categories: [],
       category: { name: "", description: "" },
+      errorMessage: "",
     };
   },
   created() {
@@ -41,7 +45,9 @@ export default {
       try {
         const response = await api.get("/categories");
         this.categories = response.data;
+        this.errorMessage = "";
       } catch (error) {
+        this.errorMessage = "Fehler beim Laden der Kategorien.";
         console.error("Fehler beim Laden der Kategorien:", error);
       }
     },
@@ -51,7 +57,9 @@ export default {
         await api.post("/categories", this.category);
         this.category = { name: "", description: "" };
         this.fetchCategories();
+        this.errorMessage = "";
       } catch (error) {
+        this.errorMessage = "Fehler beim Speichern der Kategorie.";
         console.error("Fehler beim Speichern der Kategorie:", error);
       }
     },
@@ -60,7 +68,9 @@ export default {
       try {
         await api.delete(`/categories/${categoryId}`);
         this.fetchCategories();
+        this.errorMessage = "";
       } catch (error) {
+        this.errorMessage = "Fehler beim Löschen der Kategorie.";
         console.error("Fehler beim Löschen der Kategorie:", error);
       }
     },
@@ -111,5 +121,12 @@ button {
 
 button:hover {
   background-color: #c0392b;
+}
+
+.error-message {
+  color: red;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
 }
 </style>

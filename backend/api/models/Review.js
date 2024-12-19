@@ -1,7 +1,11 @@
+const { primaryKey } = require("./User");
+
 module.exports = {
+  primaryKey: "reviewId",
   attributes: {
     reviewId: {
       type: "number",
+      autoIncrement: true,
       unique: true,
     },
     rating: {

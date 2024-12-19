@@ -35,18 +35,20 @@ module.exports.routes = {
   /* CategoryController */
   "POST /api/categories": "CategoryController.create",
   "GET /api/categories": "CategoryController.findAll",
-  "DELETE /api/categories/:id": "CategoryController.delete",
+  "GET /api/categories/:categoryId": "CategoryController.findOne",
+  "DELETE /api/categories/:categoryId": "CategoryController.delete",
 
   /** AuthController */
   "POST /api/auth/login": "AuthController.login",
   "POST /api/auth/register": "AuthController.register",
 
   // UserController
-  "GET /api/users/test-connection": "UserController.testConnection",
-  "DELETE /api/users/:userId": "UserController.deleteUser",
   "GET /api/users": "UserController.find",
   "GET /api/users/:userId": "UserController.findOne",
+  "POST /api/users": "UserController.create",
   "PUT /api/users/:userId": "UserController.update",
+  "DELETE /api/users/:userId": "UserController.deleteUser",
+  "GET /api/users/test-connection": "UserController.testConnection",
 
   // MessageController
   "POST /api/messages": "MessageController.create",

@@ -1,81 +1,77 @@
+// api/controllers/UserController.js
 module.exports = {
   // Benutzer erstellen
   create: async function (req, res) {
     try {
-      const { userId, name, email, password, typ } = req.body;
-      const user = await User.create({
-        userId,
-        name,
-        email,
-        password,
-        typ,
+      const newUser = await User.create({
+        username: req.body.username,
+        email: req.body.email,
+        password: req.body.password,
+        role: req.body.role || "user",
       }).fetch();
-      return res.json(user);
+      return res.status(201).json(newUser);
     } catch (error) {
-      return res.serverError({
-        error: "Fehler beim Erstellen des Benutzers.",
-        details: error,
-      });
+      return res.status(500).json({ error: error.message });
     }
   },
 
-  // Alle Benutzer anzeigen
+  // Alle Benutzer abrufen
   find: async function (req, res) {
     try {
-      const users = await User.find().populate("orders").populate("reviews");
+      const users = await User.find();
       return res.json(users);
     } catch (error) {
-      return res.serverError({
-        error: "Fehler beim Laden der Benutzerliste.",
-        details: error,
-      });
+      return res.status(500).json({ error: error.message });
     }
   },
 
-  // Einzelnen Benutzer anzeigen
+  // Einen Benutzer anhand der userId abrufen
   findOne: async function (req, res) {
     try {
-      const user = await User.findOne({ userId: req.params.userId })
-        .populate("orders")
-        .populate("reviews");
-      if (!user) return res.notFound({ error: "Benutzer nicht gefunden." });
+      const user = await User.findOne({ userId: req.params.userId });
+      if (!user) {
+        return res.status(404).json({ error: "Benutzer nicht gefunden" });
+      }
       return res.json(user);
     } catch (error) {
-      return res.serverError({
-        error: "Fehler beim Laden des Benutzers.",
-        details: error,
-      });
+      return res.status(500).json({ error: error.message });
     }
   },
 
   // Benutzer aktualisieren
   update: async function (req, res) {
     try {
-      const { name, email, typ } = req.body;
       const updatedUser = await User.updateOne({
         userId: req.params.userId,
-      }).set({ name, email, typ });
-      if (!updatedUser)
-        return res.notFound({ error: "Benutzer nicht gefunden." });
+      }).set({
+        username: req.body.username,
+        email: req.body.email,
+        role: req.body.role,
+      });
+      if (!updatedUser) {
+        return res.status(404).json({ error: "Benutzer nicht gefunden" });
+      }
       return res.json(updatedUser);
     } catch (error) {
-      return res.serverError({
-        error: "Fehler beim Aktualisieren des Benutzers.",
-        details: error,
-      });
+      return res.status(500).json({ error: error.message });
     }
   },
 
   // Benutzer löschen
-  delete: async function (req, res) {
+  deleteUser: async function (req, res) {
     try {
-      await User.destroyOne({ userId: req.params.userId });
-      return res.json({ message: "Benutzer erfolgreich gelöscht." });
+      const deletedUser = await User.destroyOne({ userId: req.params.userId });
+      if (!deletedUser) {
+        return res.status(404).json({ error: "Benutzer nicht gefunden" });
+      }
+      return res.status(204).send();
     } catch (error) {
-      return res.serverError({
-        error: "Fehler beim Löschen des Benutzers.",
-        details: error,
-      });
+      return res.status(500).json({ error: error.message });
     }
+  },
+
+  // Testverbindung für die API
+  testConnection: async function (req, res) {
+    return res.status(200).json({ message: "API-Verbindung erfolgreich!" });
   },
 };

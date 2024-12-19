@@ -1,10 +1,13 @@
+// api/models/User.js
 module.exports = {
+  primaryKey: "userId", // Definiere userId als primären Schlüssel
   attributes: {
-    userId: { type: "number", unique: true },
-    username: { type: "string", unique: true },
-    email: { type: "string", unique: true },
-    password: { type: "string" },
-    role: { type: "string" },
+    userId: { type: "number", autoIncrement: true },
+    username: { type: "string", unique: true, required: true },
+    email: { type: "string", unique: true, required: true },
+    password: { type: "string", required: true },
+    role: { type: "string", defaultsTo: "user" },
+
     // Beziehungen
     orders: {
       collection: "order",
@@ -15,11 +18,4 @@ module.exports = {
       via: "user",
     },
   },
-
-  /*/ Hash das Passwort vor dem Speichern
-  beforeCreate: async function (user, proceed) {
-    const bcrypt = require('bcrypt');
-    user.password = await bcrypt.hash(user.password, 10);
-    return proceed();
-  },*/
 };

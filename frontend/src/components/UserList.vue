@@ -2,11 +2,11 @@
   <div class="container">
     <h2>Benutzerliste</h2>
     <ul>
-      <li v-for="user in users" :key="user.id">
+      <li v-for="user in users" :key="user.userId">
         {{ user.username }} - {{ user.email }} - Rolle: {{ user.role }}
         <div class="button-group" v-if="userRole === 'admin'">
           <button @click="editUser(user)">Bearbeiten</button>
-          <button @click="deleteUser(user.id)">Löschen</button>
+          <button @click="deleteUser(user.userId)">Löschen</button>
         </div>
       </li>
     </ul>
@@ -30,7 +30,7 @@
         <option value="admin">Admin</option>
       </select>
       <button type="submit">Speichern</button>
-      <button type="button" @click="resetForm">Abbrechen</button>
+      <button type="button" class="cancel" @click="resetForm">Abbrechen</button>
     </form>
 
     <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
@@ -49,7 +49,7 @@ export default {
       errorMessage: "",
       successMessage: "",
       isEditing: false,
-      editingUser: { id: null, username: "", email: "", role: "user" },
+      editingUser: { userId: null, username: "", email: "", role: "user" },
       userRole: null, // Benutzerrolle hinzufügen
     };
   },
@@ -77,7 +77,7 @@ export default {
     // Benutzer aktualisieren
     async saveUser() {
       try {
-        await api.put(`/users/${this.editingUser.id}`, {
+        await api.put(`/users/${this.editingUser.userId}`, {
           username: this.editingUser.username,
           email: this.editingUser.email,
           role: this.editingUser.role,
@@ -92,17 +92,24 @@ export default {
     },
     // Benutzer löschen
     async deleteUser(userId) {
-      try {
-        await api.delete(`/users/${userId}`);
-        this.successMessage = "Benutzer erfolgreich gelöscht.";
-        this.fetchUsers();
-      } catch (error) {
-        this.errorMessage = "Fehler beim Löschen des Benutzers.";
+      if (confirm("Möchten Sie diesen Benutzer wirklich löschen?")) {
+        try {
+          await api.delete(`/users/${userId}`);
+          this.successMessage = "Benutzer erfolgreich gelöscht.";
+          this.fetchUsers();
+        } catch (error) {
+          this.errorMessage = "Fehler beim Löschen des Benutzers.";
+        }
       }
     },
     // Formular zurücksetzen
     resetForm() {
-      this.editingUser = { id: null, username: "", email: "", role: "user" };
+      this.editingUser = {
+        userId: null,
+        username: "",
+        email: "",
+        role: "user",
+      };
       this.isEditing = false;
     },
   },
@@ -151,11 +158,6 @@ li {
 li:hover {
   transform: translateY(-3px);
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-}
-
-li span {
-  font-size: 1rem;
-  color: #34495e;
 }
 
 /* Button-Gruppe */

@@ -35,7 +35,6 @@ export default {
       username: "",
       email: "",
       password: "",
-      role: "user",
       errorMessage: "",
       successMessage: "",
     };
@@ -50,7 +49,6 @@ export default {
           username: this.username,
           email: this.email,
           password: this.password,
-          role: "user",
         });
 
         this.successMessage =
@@ -86,12 +84,31 @@ label {
   font-weight: bold;
 }
 
-input,
-select {
+input {
   width: 100%;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #2980b9;
+}
+
+.error-message {
+  color: red;
+  margin-top: 10px;
+  text-align: center;
 }
 
 .success-message {

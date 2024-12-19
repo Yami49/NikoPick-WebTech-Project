@@ -9,9 +9,9 @@
     <ul class="message-list">
       <li
         v-for="msg in messages"
-        :key="msg.id"
+        :key="msg.messageId"
         class="message-card"
-        @click="goToMessageDetail(msg.id)"
+        @click="goToMessageDetail(msg.messageId)"
         style="cursor: pointer"
       >
         <div class="message-header">
@@ -20,7 +20,10 @@
           <p class="phone" v-if="msg.phone">📞 {{ msg.phone }}</p>
         </div>
         <p class="message-content">{{ msg.message }}</p>
-        <button @click="deleteMessage(msg.id)" class="delete-button">
+        <button
+          @click.stop="deleteMessage(msg.messageId)"
+          class="delete-button"
+        >
           Löschen
         </button>
       </li>
@@ -44,27 +47,25 @@ export default {
     // Nachrichten laden
     async fetchMessages() {
       try {
-        const response = await api.get("/message");
+        const response = await api.get("/messages");
         this.messages = response.data;
       } catch (error) {
         console.error("Fehler beim Laden der Nachrichten:", error);
       }
     },
     // Nachricht löschen
-    async deleteMessage(id) {
+    async deleteMessage(messageId) {
       if (confirm("Möchten Sie diese Nachricht wirklich löschen?")) {
         try {
-          await api.delete("/message", {
-            data: { id }, // Die ID im Request-Body senden
-          });
+          await api.delete(`/messages/${messageId}`);
           this.fetchMessages(); // Nachrichtenliste nach dem Löschen aktualisieren
         } catch (error) {
           console.error("Fehler beim Löschen der Nachricht:", error);
         }
       }
     },
-    goToMessageDetail(id) {
-      this.$router.push(`/message/${id}`);
+    goToMessageDetail(messageId) {
+      this.$router.push(`/message/${messageId}`);
     },
   },
 };
@@ -77,19 +78,15 @@ export default {
   padding: 20px;
 }
 
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #2c3e50;
+}
+
 ul {
   list-style: none;
   padding: 0;
-}
-
-li {
-  background-color: #f9f9f9;
-  margin-bottom: 10px;
-  padding: 10px;
-  border-radius: 5px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
 }
 
 .message-list {
@@ -107,6 +104,10 @@ li {
   transition:
     transform 0.2s,
     box-shadow 0.2s;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
 }
 
 .message-card:hover {
@@ -142,6 +143,21 @@ li {
   font-size: 1rem;
   color: #34495e;
   margin-bottom: 15px;
+  flex-grow: 1;
+}
+
+.delete-button {
+  padding: 8px 12px;
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.delete-button:hover {
+  background-color: #c0392b;
 }
 
 .empty-message {

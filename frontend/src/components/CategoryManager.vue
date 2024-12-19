@@ -11,9 +11,12 @@
 
     <!-- Kategorienliste -->
     <ul>
-      <li v-for="cat in categories" :key="cat.id">
-        {{ cat.name }} - {{ cat.description }}
-        <button @click="deleteCategory(cat.id)">Löschen</button>
+      <li v-for="cat in categories" :key="cat.categoryId">
+        <div class="category-details">
+          <strong>{{ cat.name }}</strong>
+          <p>{{ cat.description }}</p>
+        </div>
+        <button @click="deleteCategory(cat.categoryId)">Löschen</button>
       </li>
     </ul>
   </div>
@@ -53,9 +56,9 @@ export default {
       }
     },
     // Kategorie löschen
-    async deleteCategory(id) {
+    async deleteCategory(categoryId) {
       try {
-        await api.delete(`/categories/${id}`);
+        await api.delete(`/categories/${categoryId}`);
         this.fetchCategories();
       } catch (error) {
         console.error("Fehler beim Löschen der Kategorie:", error);
@@ -90,5 +93,23 @@ li {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.category-details {
+  display: flex;
+  flex-direction: column;
+}
+
+button {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #c0392b;
 }
 </style>

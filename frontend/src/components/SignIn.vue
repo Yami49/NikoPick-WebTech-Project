@@ -32,6 +32,7 @@ import api from "@/services/api";
 import { eventBus } from "@/eventBus";
 
 export default {
+  name: "SignIn",
   data() {
     return {
       email: "",
@@ -42,6 +43,8 @@ export default {
   methods: {
     async handleSignIn() {
       try {
+        this.errorMessage = "";
+
         const response = await api.post("/auth/login", {
           email: this.email,
           password: this.password,
@@ -50,15 +53,17 @@ export default {
         // Token speichern
         localStorage.setItem("token", response.data.token);
 
-        // Rolle im Event-Bus setzen
+        // Rolle und Benutzer-ID im Event-Bus setzen
         const payload = JSON.parse(atob(response.data.token.split(".")[1]));
         eventBus.setUserRole(payload.role);
+        eventBus.setUserId(payload.userId); // Benutzer-ID setzen
 
         // Zur Homepage weiterleiten
         this.$router.push("/");
       } catch (error) {
         this.errorMessage =
-          error.response?.data?.error || "Anmeldung fehlgeschlagen.";
+          error.response?.data?.error ||
+          "Anmeldung fehlgeschlagen. Bitte überprüfen Sie Ihre Eingaben.";
       }
     },
     navigateRegister() {
@@ -94,6 +99,7 @@ input {
 }
 
 button {
+  width: 100%;
   background-color: #5899ff;
   color: white;
   font-family: inherit;
@@ -109,6 +115,12 @@ button:hover {
   background-color: #3456a1;
 }
 
+.error-message {
+  color: red;
+  margin-top: 10px;
+  text-align: center;
+}
+
 .register-link {
   text-align: center;
   margin-top: 15px;
@@ -121,6 +133,7 @@ button:hover {
   cursor: pointer;
   font-size: 1rem;
   text-decoration: underline;
+  padding: 0;
 }
 
 .register-link button:hover {

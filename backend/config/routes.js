@@ -33,10 +33,10 @@ module.exports.routes = {
   "GET /products/:productId": "ProductController.findOne",
 
   /* CategoryController */
-  "POST /api/categories": "CategoryController.create",
-  "GET /api/categories": "CategoryController.findAll",
-  "GET /api/categories/:categoryId": "CategoryController.findOne",
-  "DELETE /api/categories/:categoryId": "CategoryController.delete",
+  "POST /api/category": "CategoryController.create",
+  "GET /api/category": "CategoryController.findAll",
+  "GET /api/category/:categoryId": "CategoryController.findOne",
+  "DELETE /api/category/:categoryId": "CategoryController.delete",
 
   /** AuthController */
   "POST /api/auth/login": "AuthController.login",

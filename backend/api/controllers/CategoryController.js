@@ -28,8 +28,8 @@ module.exports = {
   // Eine einzelne Kategorie finden
   findOne: async function (req, res) {
     try {
-      const { id } = req.params;
-      const category = await Category.findOne({ categoryId: id }).populate(
+      const { categoryId } = req.params;
+      const category = await Category.findOne({ categoryId }).populate(
         "products",
       );
 

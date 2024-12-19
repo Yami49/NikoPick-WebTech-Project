@@ -19,6 +19,9 @@
           <strong>{{ cat.name }}</strong>
           <p>{{ cat.description }}</p>
         </div>
+        <router-link :to="`/category/${cat.categoryId}`">
+          <button>Anzeigen</button>
+        </router-link>
         <button @click="deleteCategory(cat.categoryId)">Löschen</button>
       </li>
     </ul>
@@ -43,7 +46,7 @@ export default {
     // Alle Kategorien laden
     async fetchCategories() {
       try {
-        const response = await api.get("/categories");
+        const response = await api.get("/category");
         this.categories = response.data;
         this.errorMessage = "";
       } catch (error) {
@@ -54,7 +57,7 @@ export default {
     // Kategorie speichern
     async saveCategory() {
       try {
-        await api.post("/categories", this.category);
+        await api.post("/category", this.category);
         this.category = { name: "", description: "" };
         this.fetchCategories();
         this.errorMessage = "";
@@ -66,7 +69,7 @@ export default {
     // Kategorie löschen
     async deleteCategory(categoryId) {
       try {
-        await api.delete(`/categories/${categoryId}`);
+        await api.delete(`/category/${categoryId}`);
         this.fetchCategories();
         this.errorMessage = "";
       } catch (error) {

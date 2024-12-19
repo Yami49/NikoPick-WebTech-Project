@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import HomePage from "../components/HomePage.vue";
 import ProductManager from "../components/ProductManager.vue";
 import CategoryManager from "../components/CategoryManager.vue";
+import CategoryDetail from "../components/CategoryDetail.vue";
 import ImpressumComponente from "../components/ImpressumComponente.vue";
 import DatenschutzErklaerung from "../components/DatenschutzErklaerung.vue";
 import KontaktComponente from "../components/KontaktComponente.vue";
@@ -68,15 +69,21 @@ const routes = [
     meta: { requiresAdmin: true }, // Meta-Flag für Admin-Zugriff
   },
   {
-    path: "/message/:id",
+    path: "/message/messageId",
     name: "MessageDetail",
     component: MessageDetail,
     props: true,
   },
   {
-    path: "/products/:id",
+    path: "/products/productId",
     name: "ProductDetail",
     component: ProductDetail,
+  },
+  {
+    path: "/category/:categoryId",
+    name: "CategoryDetail",
+    component: CategoryDetail,
+    props: true,
   },
   {
     path: "/transactions",

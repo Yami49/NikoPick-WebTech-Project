@@ -3,18 +3,10 @@ module.exports = {
     orderId: {
       type: "number",
       unique: true,
-      autoIncrement: true,
     },
-    date: {
-      type: "ref",
-      columnType: "datetime",
-      autoCreatedAt: true,
-    },
-    status: {
-      type: "string",
-      isIn: ["pending", "shipped", "delivered", "cancelled"],
-      defaultsTo: "pending",
-    },
+    date: { type: "ref", columnType: "datetime" },
+    status: { type: "string" },
+
     // Beziehungen
     user: {
       model: "user",

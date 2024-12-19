@@ -3,7 +3,6 @@ module.exports = {
     reviewId: {
       type: "number",
       unique: true,
-      autoIncrement: true,
     },
     rating: {
       type: "number",

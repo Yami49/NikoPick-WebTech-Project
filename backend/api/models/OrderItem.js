@@ -3,7 +3,6 @@ module.exports = {
     orderItemId: {
       type: "number",
       unique: true,
-      autoIncrement: true,
     },
     quantity: {
       type: "number",

@@ -1,30 +1,10 @@
 module.exports = {
   attributes: {
-    userId: {
-      type: "number",
-      unique: true,
-      autoIncrement: true,
-    },
-    username: {
-      type: "string",
-      required: true,
-      unique: true,
-    },
-    email: {
-      type: "string",
-      required: true,
-      unique: true,
-      isEmail: true,
-    },
-    password: {
-      type: "string",
-      required: true,
-    },
-    role: {
-      type: "string",
-      isIn: ["user", "admin"],
-      defaultsTo: "user",
-    },
+    userId: { type: "number", unique: true },
+    username: { type: "string", unique: true },
+    email: { type: "string", unique: true },
+    password: { type: "string" },
+    role: { type: "string" },
     // Beziehungen
     orders: {
       collection: "order",

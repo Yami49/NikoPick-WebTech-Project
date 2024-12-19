@@ -1,5 +1,9 @@
 module.exports = {
   attributes: {
+    categoryId: {
+      type: "number",
+      unique: true,
+    },
     name: {
       type: "string",
       required: true,

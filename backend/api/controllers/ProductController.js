@@ -25,10 +25,10 @@ module.exports = {
   // Alle Produkte anzeigen
   find: async function (req, res) {
     try {
-      const products = await Product.find()
+      const product = await Product.find()
         .populate("category")
         .populate("reviews");
-      return res.json(products);
+      return res.json(product);
     } catch (error) {
       return res.serverError({
         error: "Fehler beim Laden der Produktliste.",
@@ -60,8 +60,10 @@ module.exports = {
       const updatedProduct = await Product.updateOne({
         productId: req.params.productId,
       }).set({ title, image, description, price, rating, category });
+
       if (!updatedProduct)
         return res.notFound({ error: "Produkt nicht gefunden." });
+
       return res.json(updatedProduct);
     } catch (error) {
       return res.serverError({
@@ -74,7 +76,13 @@ module.exports = {
   // Produkt löschen
   delete: async function (req, res) {
     try {
-      await Product.destroyOne({ productId: req.params.productId });
+      const deletedProduct = await Product.destroyOne({
+        productId: req.params.productId,
+      });
+
+      if (!deletedProduct)
+        return res.notFound({ error: "Produkt nicht gefunden." });
+
       return res.json({ message: "Produkt erfolgreich gelöscht." });
     } catch (error) {
       return res.serverError({

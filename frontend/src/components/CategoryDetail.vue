@@ -11,8 +11,8 @@
       <p><strong>Beschreibung:</strong> {{ category.description }}</p>
 
       <h3>Produkte in dieser Kategorie:</h3>
-      <ul v-if="category.products && category.products.length">
-        <li v-for="product in category.products" :key="product.id">
+      <ul v-if="category.product && category.product.length">
+        <li v-for="product in category.product" :key="product.id">
           {{ product.name }} - {{ product.price }}€
         </li>
       </ul>

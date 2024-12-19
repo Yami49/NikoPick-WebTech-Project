@@ -42,7 +42,7 @@ export default {
     async fetchProduct() {
       try {
         const productId = this.$route.params.productId;
-        const response = await api.get(`/products/${productId}`);
+        const response = await api.get(`/product/${productId}`);
         this.product = response.data;
       } catch (error) {
         console.error("Fehler beim Laden des Produkts:", error);

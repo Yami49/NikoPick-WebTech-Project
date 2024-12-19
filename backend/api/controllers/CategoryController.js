@@ -48,8 +48,15 @@ module.exports = {
   // Kategorie löschen
   delete: async function (req, res) {
     try {
-      const { id } = req.params;
-      await Category.destroyOne({ categoryId: id });
+      const { categoryId } = req.params;
+      const deletedCategory = await Category.destroyOne({
+        categoryId: parseInt(categoryId),
+      });
+
+      if (!deletedCategory) {
+        return res.status(404).json({ error: "Kategorie nicht gefunden." });
+      }
+
       return res.status(204).send();
     } catch (error) {
       return res.serverError({

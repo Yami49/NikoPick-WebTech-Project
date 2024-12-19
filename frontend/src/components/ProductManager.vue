@@ -6,23 +6,24 @@
     <div class="search-filters">
       <input
         v-model="searchQuery"
-        @input="searchProducts"
+        @input="searchProduct"
         placeholder="Suche nach Name"
       />
       <input v-model="minPrice" placeholder="Min Preis" type="number" />
       <input v-model="maxPrice" placeholder="Max Preis" type="number" />
+
       <!-- Kategorie-Dropdown für den Filter -->
-      <select v-model="selectedCategory" @change="searchProducts">
+      <select v-model="selectedCategory" @change="searchProduct">
         <option value="">Alle Kategorien</option>
         <option
           v-for="category in categories"
-          :key="category.id"
-          :value="category.id"
+          :key="category.categoryId"
+          :value="category.categoryId"
         >
           {{ category.name }}
         </option>
       </select>
-      <button @click="searchProducts">Suchen</button>
+      <button @click="searchProduct">Suchen</button>
     </div>
 
     <!-- Formular zum Erstellen/Bearbeiten eines Produkts (nur für Admins) -->
@@ -41,8 +42,8 @@
         <option value="" disabled>Wähle eine Kategorie</option>
         <option
           v-for="category in categories"
-          :key="category.id"
-          :value="category.id"
+          :key="category.categoryId"
+          :value="category.categoryId"
         >
           {{ category.name }}
         </option>
@@ -58,19 +59,19 @@
 
     <!-- Produktliste -->
     <ul>
-      <li v-for="p in products" :key="p.id">
+      <li v-for="p in product" :key="p.productId">
         <span>
           {{ p.name }} - {{ p.price }}€ - {{ getCategoryName(p.category) }}
         </span>
 
         <div class="button-group">
-          <router-link :to="`/products/${p.id}`">
+          <router-link :to="`/product/${p.productId}`">
             <button>Ansehen</button>
           </router-link>
           <!-- Buttons nur für Admins anzeigen -->
           <div class="button-group" v-if="userRole === 'admin'">
             <button @click="editProduct(p)">Bearbeiten</button>
-            <button @click="deleteProduct(p.id)">Löschen</button>
+            <button @click="deleteProduct(p.productId)">Löschen</button>
           </div>
         </div>
       </li>
@@ -85,29 +86,29 @@ import { eventBus } from "@/eventBus";
 export default {
   data() {
     return {
-      products: [],
+      product: [],
       categories: [],
       searchQuery: "",
       minPrice: "",
       maxPrice: "",
       selectedCategory: "",
-      product: { name: "", description: "", price: 0, category: "" },
+      product: { name: "", description: "", price: 0, category: null },
       isEditing: false,
       editingId: null,
       userRole: null, // Benutzerrolle hinzufügen
     };
   },
   created() {
-    this.fetchProducts();
+    this.fetchProduct();
     this.fetchCategories();
     this.userRole = eventBus.userRole; // Benutzerrolle aus dem Event-Bus laden
   },
   methods: {
     // Alle Produkte laden
-    async fetchProducts() {
+    async fetchProduct() {
       try {
-        const response = await api.get("/products");
-        this.products = response.data;
+        const response = await api.get("/product");
+        this.product = response.data;
       } catch (error) {
         console.error("Fehler beim Laden der Produkte:", error);
       }
@@ -115,16 +116,16 @@ export default {
     // Alle Kategorien laden
     async fetchCategories() {
       try {
-        const response = await api.get("/categories");
+        const response = await api.get("/category");
         this.categories = response.data;
       } catch (error) {
         console.error("Fehler beim Laden der Kategorien:", error);
       }
     },
     // Such- und Filterfunktion
-    async searchProducts() {
+    async searchProduct() {
       try {
-        const response = await api.get("/products/search", {
+        const response = await api.get("/product/search", {
           params: {
             name: this.searchQuery,
             minPrice: this.minPrice,
@@ -132,7 +133,7 @@ export default {
             category: this.selectedCategory,
           },
         });
-        this.products = response.data;
+        this.product = response.data;
       } catch (error) {
         console.error("Fehler bei der Suche:", error);
       }
@@ -141,40 +142,45 @@ export default {
     async saveProduct() {
       try {
         if (this.isEditing) {
-          await api.put(`/products/${this.editingId}`, this.product);
+          await api.put(`/product/${this.editingId}`, this.product);
         } else {
-          await api.post("/products", this.product);
+          await api.post("/product", this.product);
         }
         this.resetForm();
-        this.fetchProducts();
+        this.fetchProduct();
       } catch (error) {
         console.error("Fehler beim Speichern des Produkts:", error);
       }
     },
     // Produkt zum Bearbeiten laden
     editProduct(product) {
-      this.product = { ...product };
+      this.product = {
+        name: product.name,
+        description: product.description,
+        price: product.price,
+        category: product.category,
+      };
       this.isEditing = true;
-      this.editingId = product.id;
+      this.editingId = product.productId;
     },
     // Produkt löschen
-    async deleteProduct(id) {
+    async deleteProduct(productId) {
       try {
-        await api.delete(`/products/${id}`);
-        this.fetchProducts();
+        await api.delete(`/product/${productId}`);
+        this.fetchProduct();
       } catch (error) {
         console.error("Fehler beim Löschen des Produkts:", error);
       }
     },
     // Formular zurücksetzen
     resetForm() {
-      this.product = { name: "", description: "", price: 0, category: "" };
+      this.product = { name: "", description: "", price: 0, category: null };
       this.isEditing = false;
       this.editingId = null;
     },
     // Kategorie-Name anhand der ID holen
     getCategoryName(categoryId) {
-      const category = this.categories.find((c) => c.id === categoryId);
+      const category = this.categories.find((c) => c.categoryId === categoryId);
       return category ? category.name : "Keine Kategorie";
     },
   },

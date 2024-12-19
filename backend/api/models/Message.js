@@ -1,5 +1,10 @@
 module.exports = {
   attributes: {
+    messageId: {
+      type: "number",
+      unique: true,
+      autoIncrement: true,
+    },
     name: {
       type: "string",
       required: true,
@@ -16,6 +21,16 @@ module.exports = {
     message: {
       type: "string",
       required: true,
+    },
+    createdAt: {
+      type: "ref",
+      columnType: "datetime",
+      autoCreatedAt: true,
+    },
+    updatedAt: {
+      type: "ref",
+      columnType: "datetime",
+      autoUpdatedAt: true,
     },
   },
 };

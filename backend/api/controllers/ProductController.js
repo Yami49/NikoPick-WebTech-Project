@@ -1,85 +1,86 @@
 module.exports = {
-  // Create
+  // Produkt erstellen
   create: async function (req, res) {
     try {
-      const { name, description, price, category } = req.body;
+      const { productId, title, image, description, price, rating, category } =
+        req.body;
       const product = await Product.create({
-        name,
+        productId,
+        title,
+        image,
         description,
         price,
+        rating,
         category,
       }).fetch();
       return res.json(product);
     } catch (error) {
-      return res.serverError(error);
-    }
-  },
-
-  // Read all
-  findAll: async function (req, res) {
-    try {
-      const products = await Product.find();
-      return res.json(products);
-    } catch (error) {
-      return res.serverError(error);
-    }
-  },
-
-  // Read one
-  findOne: async function (req, res) {
-    try {
-      const productId = req.params.id;
-      const product = await Product.findOne({ id: productId });
-      if (!product) {
-        return res.status(404).json({ error: "Produkt nicht gefunden." });
-      }
-      return res.json(product);
-    } catch (error) {
-      console.error("Fehler beim Laden des Produkts:", error);
-      return res.status(500).json({ error: "Fehler beim Laden des Produkts." });
-    }
-  },
-
-  // Update
-  update: async function (req, res) {
-    try {
-      const { name, description, price } = req.body;
-      const product = await Product.updateOne({ id: req.params.id }).set({
-        name,
-        description,
-        price,
+      return res.serverError({
+        error: "Fehler beim Erstellen des Produkts.",
+        details: error,
       });
-      return res.json(product);
-    } catch (error) {
-      return res.serverError(error);
     }
   },
 
-  // Delete
-  delete: async function (req, res) {
-    try {
-      await Product.destroyOne({ id: req.params.id });
-      return res.json({ message: "Product deleted" });
-    } catch (error) {
-      return res.serverError(error);
-    }
-  },
-
-  // Suchfunktion
+  // Alle Produkte anzeigen
   find: async function (req, res) {
     try {
-      const { name, minPrice, maxPrice, category } = req.query;
-      const criteria = {};
-
-      if (name) criteria.name = { contains: name };
-      if (minPrice) criteria.price = { ">=": parseFloat(minPrice) };
-      if (maxPrice) criteria.price = { "<=": parseFloat(maxPrice) };
-      if (category) criteria.category = category;
-
-      const products = await Product.find({ where: criteria });
+      const products = await Product.find()
+        .populate("category")
+        .populate("reviews");
       return res.json(products);
     } catch (error) {
-      return res.serverError(error);
+      return res.serverError({
+        error: "Fehler beim Laden der Produktliste.",
+        details: error,
+      });
+    }
+  },
+
+  // Einzelnes Produkt anzeigen
+  findOne: async function (req, res) {
+    try {
+      const product = await Product.findOne({ productId: req.params.productId })
+        .populate("category")
+        .populate("reviews");
+      if (!product) return res.notFound({ error: "Produkt nicht gefunden." });
+      return res.json(product);
+    } catch (error) {
+      return res.serverError({
+        error: "Fehler beim Laden des Produkts.",
+        details: error,
+      });
+    }
+  },
+
+  // Produkt aktualisieren
+  update: async function (req, res) {
+    try {
+      const { title, image, description, price, rating, category } = req.body;
+      const updatedProduct = await Product.updateOne({
+        productId: req.params.productId,
+      }).set({ title, image, description, price, rating, category });
+      if (!updatedProduct)
+        return res.notFound({ error: "Produkt nicht gefunden." });
+      return res.json(updatedProduct);
+    } catch (error) {
+      return res.serverError({
+        error: "Fehler beim Aktualisieren des Produkts.",
+        details: error,
+      });
+    }
+  },
+
+  // Produkt löschen
+  delete: async function (req, res) {
+    try {
+      await Product.destroyOne({ productId: req.params.productId });
+      return res.json({ message: "Produkt erfolgreich gelöscht." });
+    } catch (error) {
+      return res.serverError({
+        error: "Fehler beim Löschen des Produkts.",
+        details: error,
+      });
     }
   },
 };

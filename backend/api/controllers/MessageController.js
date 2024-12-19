@@ -1,5 +1,5 @@
 module.exports = {
-  // Nachricht speichern
+  // Nachricht erstellen
   create: async function (req, res) {
     try {
       const { name, email, phone, message } = req.body;
@@ -19,49 +19,39 @@ module.exports = {
   },
 
   // Alle Nachrichten anzeigen
-  findAll: async function (req, res) {
+  find: async function (req, res) {
     try {
       const messages = await Message.find();
       return res.json(messages);
     } catch (error) {
-      return res.serverError(error);
+      return res.serverError({
+        error: "Fehler beim Laden der Nachrichten.",
+        details: error,
+      });
     }
   },
 
+  // Einzelne Nachricht anzeigen
   findOne: async function (req, res) {
     try {
-      const message = await Message.findOne({ id: req.params.id });
-      if (!message) {
-        return res.notFound({ error: "Nachricht nicht gefunden." });
-      }
+      const message = await Message.findOne({
+        messageId: req.params.messageId,
+      });
+      if (!message) return res.notFound({ error: "Nachricht nicht gefunden." });
       return res.json(message);
     } catch (error) {
-      return res.serverError(error);
+      return res.serverError({
+        error: "Fehler beim Laden der Nachricht.",
+        details: error,
+      });
     }
   },
 
+  // Nachricht löschen
   delete: async function (req, res) {
     try {
-      const { id } = req.body; // Die ID aus dem Request-Body extrahieren
-
-      if (!id) {
-        return res.badRequest({
-          error: "ID ist erforderlich, um die Nachricht zu löschen.",
-        });
-      }
-
-      const deletedMessage = await Message.destroyOne({ id });
-
-      if (!deletedMessage) {
-        return res.notFound({
-          error: "Nachricht mit der angegebenen ID wurde nicht gefunden.",
-        });
-      }
-
-      return res.json({
-        message: "Nachricht erfolgreich gelöscht.",
-        deletedMessage,
-      });
+      await Message.destroyOne({ messageId: req.params.messageId });
+      return res.json({ message: "Nachricht erfolgreich gelöscht." });
     } catch (error) {
       return res.serverError({
         error: "Fehler beim Löschen der Nachricht.",

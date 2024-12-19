@@ -26,11 +26,11 @@ module.exports.routes = {
   /* ProductController*/
   "POST /api/products": "ProductController.create",
   "GET /api/products": "ProductController.findAll",
-  "GET /api/products/:id": "ProductController.findOne",
-  "PUT /api/products/:id": "ProductController.update",
-  "DELETE /api/products/:id": "ProductController.delete",
+  "GET /api/products/:productId": "ProductController.findOne",
+  "PUT /api/products/:productId": "ProductController.update",
+  "DELETE /api/products/:productId": "ProductController.delete",
   "GET /api/products/search": "ProductController.find",
-  "GET /products/:id": "ProductController.findOne",
+  "GET /products/:productId": "ProductController.findOne",
 
   /* CategoryController */
   "POST /api/categories": "CategoryController.create",
@@ -43,19 +43,24 @@ module.exports.routes = {
 
   // UserController
   "GET /api/users/test-connection": "UserController.testConnection",
-  "DELETE /api/users/:id": "UserController.deleteUser",
+  "DELETE /api/users/:userId": "UserController.deleteUser",
   "GET /api/users": "UserController.find",
-  "GET /api/users/:id": "UserController.findOne",
-  "PUT /api/users/:id": "UserController.update",
+  "GET /api/users/:userId": "UserController.findOne",
+  "PUT /api/users/:userId": "UserController.update",
 
-  "POST /api/message": "MessageController.create",
-  "GET /api/message": "MessageController.findAll",
-  "DELETE /api/message": "MessageController.delete",
-  "GET /api/message/:id": "MessageController.findOne",
+  // MessageController
+  "POST /api/messages": "MessageController.create",
+  "GET /api/messages": "MessageController.find",
+  "GET /api/messages/:messageId": "MessageController.findOne",
+  "DELETE /api/messages/:messageId": "MessageController.delete",
 
+  // TransactionController
   "POST /transactions": "TransactionController.create",
   "GET /transactions": "TransactionController.findAll",
   "DELETE /transactions/:id": "TransactionController.delete",
+
+  // ReviewController
+  "DELETE /api/reviews/:reviewId": "ReviewController.delete",
 
   /***************************************************************************
    *                                                                          *

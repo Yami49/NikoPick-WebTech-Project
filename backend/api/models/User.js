@@ -1,5 +1,10 @@
 module.exports = {
   attributes: {
+    userId: {
+      type: "number",
+      unique: true,
+      autoIncrement: true,
+    },
     username: {
       type: "string",
       required: true,
@@ -19,6 +24,15 @@ module.exports = {
       type: "string",
       isIn: ["user", "admin"],
       defaultsTo: "user",
+    },
+    // Beziehungen
+    orders: {
+      collection: "order",
+      via: "user",
+    },
+    reviews: {
+      collection: "review",
+      via: "user",
     },
   },
 

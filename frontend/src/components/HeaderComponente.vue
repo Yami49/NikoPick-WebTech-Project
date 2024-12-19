@@ -14,7 +14,7 @@
         <button @click="toggleMenu" class="burger-button">☰</button>
         <div v-if="isMenuOpen" class="menu-dropdown">
           <ul>
-            <li @click="navigateTo('/product')">Products</li>
+            <li @click="navigateTo('/products')">Products</li>
             <li
               v-if="eventBus.userRole === 'admin'"
               @click="navigateTo('/message')"

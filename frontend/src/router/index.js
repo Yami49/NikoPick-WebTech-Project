@@ -8,11 +8,11 @@ import DatenschutzErklaerung from "../components/DatenschutzErklaerung.vue";
 import KontaktComponente from "../components/KontaktComponente.vue";
 import SignIn from "../components/SignIn.vue";
 import RegisterComponente from "../components/RegisterComponente.vue";
-import UserList from "@/components/UserList.vue";
-import MessageList from "@/components/MessageList.vue";
-import MessageDetail from "@/components/MessageDetail.vue";
-import ProductDetail from "@/components/ProductDetail.vue";
-import TransactionManager from "@/components/TransactionManager.vue";
+import UserList from "../components/UserList.vue";
+import MessageList from "../components/MessageList.vue";
+import MessageDetail from "../components/MessageDetail.vue";
+import ProductDetail from "../components/ProductDetail.vue";
+import TransactionManager from "../components/TransactionManager.vue";
 
 const routes = [
   {
@@ -21,7 +21,7 @@ const routes = [
     component: HomePage,
   },
   {
-    path: "/product",
+    path: "/products",
     name: "ProductManager",
     component: ProductManager,
   },
@@ -69,13 +69,13 @@ const routes = [
     meta: { requiresAdmin: true }, // Meta-Flag für Admin-Zugriff
   },
   {
-    path: "/message/messageId",
+    path: "/message/:messageId",
     name: "MessageDetail",
     component: MessageDetail,
     props: true,
   },
   {
-    path: "/products/productId",
+    path: "/products/:productId",
     name: "ProductDetail",
     component: ProductDetail,
   },

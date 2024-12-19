@@ -7,7 +7,8 @@
       <p><strong>Beschreibung:</strong> {{ product.description }}</p>
       <p><strong>Preis:</strong> {{ product.price }}€</p>
       <p>
-        <strong>Kategorie:</strong> {{ getCategoryName(product.categoryId) }}
+        <strong>Kategorie:</strong>
+        {{ product.category ? product.category.name : "Keine Kategorie" }}
       </p>
     </div>
 
@@ -15,9 +16,13 @@
       <p>Lade Produktdetails...</p>
     </div>
 
+    <!-- Fehlermeldung -->
     <div v-if="errorMessage" class="error-message">
       <p>{{ errorMessage }}</p>
     </div>
+
+    <!-- Zurück-Button -->
+    <button @click="goBack" class="back-button">Zurück zur Produktliste</button>
   </div>
 </template>
 
@@ -29,42 +34,27 @@ export default {
   data() {
     return {
       product: null,
-      categories: [],
       errorMessage: "",
     };
   },
   created() {
     this.fetchProduct();
-    this.fetchCategories();
   },
   methods: {
     // Produkt laden
     async fetchProduct() {
       try {
         const productId = this.$route.params.productId;
-        const response = await api.get(`/product/${productId}`);
+        const response = await api.get(`/products/${productId}`);
         this.product = response.data;
       } catch (error) {
         console.error("Fehler beim Laden des Produkts:", error);
         this.errorMessage = "Fehler beim Laden des Produkts.";
       }
     },
-
-    // Kategorien laden
-    async fetchCategories() {
-      try {
-        const response = await api.get("/categories");
-        this.categories = response.data;
-      } catch (error) {
-        console.error("Fehler beim Laden der Kategorien:", error);
-        this.errorMessage = "Fehler beim Laden der Kategorien.";
-      }
-    },
-
-    // Kategorie-Name anhand der categoryId holen
-    getCategoryName(categoryId) {
-      const category = this.categories.find((c) => c.categoryId === categoryId);
-      return category ? category.name : "Keine Kategorie";
+    // Zurück zur Produktliste
+    goBack() {
+      this.$router.push("/products");
     },
   },
 };
@@ -98,5 +88,22 @@ p {
   text-align: center;
   margin-top: 20px;
   font-weight: bold;
+}
+
+.back-button {
+  display: block;
+  margin: 20px auto 0;
+  padding: 10px 20px;
+  background-color: #3498db;
+  color: white;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.back-button:hover {
+  background-color: #2980b9;
 }
 </style>

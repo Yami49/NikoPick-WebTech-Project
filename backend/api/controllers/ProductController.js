@@ -2,15 +2,11 @@ module.exports = {
   // Produkt erstellen
   create: async function (req, res) {
     try {
-      const { productId, title, image, description, price, rating, category } =
-        req.body;
+      const { name, description, price, category } = req.body;
       const product = await Product.create({
-        productId,
-        title,
-        image,
+        name,
         description,
         price,
-        rating,
         category,
       }).fetch();
       return res.json(product);
@@ -23,15 +19,13 @@ module.exports = {
   },
 
   // Alle Produkte anzeigen
-  find: async function (req, res) {
+  findAll: async function (req, res) {
     try {
-      const product = await Product.find()
-        .populate("category")
-        .populate("reviews");
-      return res.json(product);
+      const products = await Product.find().populate("category");
+      return res.json(products);
     } catch (error) {
       return res.serverError({
-        error: "Fehler beim Laden der Produktliste.",
+        error: "Fehler beim Laden der Produkte.",
         details: error,
       });
     }
@@ -40,9 +34,9 @@ module.exports = {
   // Einzelnes Produkt anzeigen
   findOne: async function (req, res) {
     try {
-      const product = await Product.findOne({ productId: req.params.productId })
-        .populate("category")
-        .populate("reviews");
+      const product = await Product.findOne({
+        productId: req.params.productId,
+      }).populate("category");
       if (!product) return res.notFound({ error: "Produkt nicht gefunden." });
       return res.json(product);
     } catch (error) {
@@ -56,14 +50,17 @@ module.exports = {
   // Produkt aktualisieren
   update: async function (req, res) {
     try {
-      const { title, image, description, price, rating, category } = req.body;
+      const { name, description, price, category } = req.body;
       const updatedProduct = await Product.updateOne({
         productId: req.params.productId,
-      }).set({ title, image, description, price, rating, category });
-
+      }).set({
+        name,
+        description,
+        price,
+        category,
+      });
       if (!updatedProduct)
         return res.notFound({ error: "Produkt nicht gefunden." });
-
       return res.json(updatedProduct);
     } catch (error) {
       return res.serverError({
@@ -76,13 +73,7 @@ module.exports = {
   // Produkt löschen
   delete: async function (req, res) {
     try {
-      const deletedProduct = await Product.destroyOne({
-        productId: req.params.productId,
-      });
-
-      if (!deletedProduct)
-        return res.notFound({ error: "Produkt nicht gefunden." });
-
+      await Product.destroyOne({ productId: req.params.productId });
       return res.json({ message: "Produkt erfolgreich gelöscht." });
     } catch (error) {
       return res.serverError({

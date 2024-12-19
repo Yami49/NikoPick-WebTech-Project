@@ -23,14 +23,13 @@ module.exports.routes = {
   "GET /api/hello": "TestController.hello",
   "GET /api/test-connection": "UserController.testConnection",
 
-  /* ProductController*/
-  "POST /api/product": "ProductController.create",
-  "GET /api/product": "ProductController.findAll",
-  "GET /api/product/:productId": "ProductController.findOne",
-  "PUT /api/product/:productId": "ProductController.update",
-  "DELETE /api/product/:productId": "ProductController.delete",
-  "GET /api/product/search": "ProductController.find",
-  "GET /product/:productId": "ProductController.findOne",
+  /* ProductController */
+  "POST /api/products": "ProductController.create",
+  "GET /api/products": "ProductController.findAll",
+  "GET /api/products/:productId": "ProductController.findOne",
+  "PUT /api/products/:productId": "ProductController.update",
+  "DELETE /api/products/:productId": "ProductController.delete",
+  "GET /api/products/search": "ProductController.find",
 
   /* CategoryController */
   "POST /api/category": "CategoryController.create",

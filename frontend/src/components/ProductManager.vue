@@ -6,14 +6,14 @@
     <div class="search-filters">
       <input
         v-model="searchQuery"
-        @input="searchProduct"
+        @input="searchProducts"
         placeholder="Suche nach Name"
       />
       <input v-model="minPrice" placeholder="Min Preis" type="number" />
       <input v-model="maxPrice" placeholder="Max Preis" type="number" />
 
       <!-- Kategorie-Dropdown für den Filter -->
-      <select v-model="selectedCategory" @change="searchProduct">
+      <select v-model="selectedCategory" @change="searchProducts">
         <option value="">Alle Kategorien</option>
         <option
           v-for="category in categories"
@@ -23,7 +23,7 @@
           {{ category.name }}
         </option>
       </select>
-      <button @click="searchProduct">Suchen</button>
+      <button @click="searchProducts">Suchen</button>
     </div>
 
     <!-- Formular zum Erstellen/Bearbeiten eines Produkts (nur für Admins) -->
@@ -37,7 +37,6 @@
         required
       />
 
-      <!-- Kategorie-Dropdown -->
       <select v-model="product.category">
         <option value="" disabled>Wähle eine Kategorie</option>
         <option
@@ -59,16 +58,15 @@
 
     <!-- Produktliste -->
     <ul>
-      <li v-for="p in product" :key="p.productId">
-        <span>
-          {{ p.name }} - {{ p.price }}€ - {{ getCategoryName(p.category) }}
-        </span>
-
+      <li v-for="p in products" :key="p.productId">
+        <span
+          >{{ p.name }} - {{ p.price }}€ -
+          {{ p.category ? p.category.name : "Keine Kategorie" }}</span
+        >
         <div class="button-group">
-          <router-link :to="`/product/${p.productId}`">
+          <router-link :to="`/products/${p.productId}`">
             <button>Ansehen</button>
           </router-link>
-          <!-- Buttons nur für Admins anzeigen -->
           <div class="button-group" v-if="userRole === 'admin'">
             <button @click="editProduct(p)">Bearbeiten</button>
             <button @click="deleteProduct(p.productId)">Löschen</button>
@@ -86,7 +84,7 @@ import { eventBus } from "@/eventBus";
 export default {
   data() {
     return {
-      product: [],
+      products: [],
       categories: [],
       searchQuery: "",
       minPrice: "",
@@ -95,20 +93,21 @@ export default {
       product: { name: "", description: "", price: 0, category: null },
       isEditing: false,
       editingId: null,
-      userRole: null, // Benutzerrolle hinzufügen
+      userRole: null,
     };
   },
   created() {
-    this.fetchProduct();
+    this.fetchProducts();
     this.fetchCategories();
-    this.userRole = eventBus.userRole; // Benutzerrolle aus dem Event-Bus laden
+    this.userRole = eventBus.userRole;
   },
   methods: {
     // Alle Produkte laden
-    async fetchProduct() {
+    async fetchProducts() {
       try {
-        const response = await api.get("/product");
-        this.product = response.data;
+        const response = await api.get("/products");
+        this.products = response.data;
+        console.log("Geladene Produkte:", this.products); // Debugging-Log
       } catch (error) {
         console.error("Fehler beim Laden der Produkte:", error);
       }
@@ -118,14 +117,15 @@ export default {
       try {
         const response = await api.get("/category");
         this.categories = response.data;
+        console.log("Geladene Kategorien:", this.categories); // Debugging-Log
       } catch (error) {
         console.error("Fehler beim Laden der Kategorien:", error);
       }
     },
     // Such- und Filterfunktion
-    async searchProduct() {
+    async searchProducts() {
       try {
-        const response = await api.get("/product/search", {
+        const response = await api.get("/products/search", {
           params: {
             name: this.searchQuery,
             minPrice: this.minPrice,
@@ -133,7 +133,7 @@ export default {
             category: this.selectedCategory,
           },
         });
-        this.product = response.data;
+        this.products = response.data;
       } catch (error) {
         console.error("Fehler bei der Suche:", error);
       }
@@ -142,12 +142,12 @@ export default {
     async saveProduct() {
       try {
         if (this.isEditing) {
-          await api.put(`/product/${this.editingId}`, this.product);
+          await api.put(`/products/${this.editingId}`, this.product);
         } else {
-          await api.post("/product", this.product);
+          await api.post("/products", this.product);
         }
         this.resetForm();
-        this.fetchProduct();
+        this.fetchProducts();
       } catch (error) {
         console.error("Fehler beim Speichern des Produkts:", error);
       }
@@ -166,8 +166,8 @@ export default {
     // Produkt löschen
     async deleteProduct(productId) {
       try {
-        await api.delete(`/product/${productId}`);
-        this.fetchProduct();
+        await api.delete(`/products/${productId}`);
+        this.fetchProducts();
       } catch (error) {
         console.error("Fehler beim Löschen des Produkts:", error);
       }
@@ -229,6 +229,6 @@ li {
 
 .button-group {
   display: flex;
-  gap: 10px; /* Abstand zwischen den Buttons */
+  gap: 10px;
 }
 </style>

@@ -1,5 +1,3 @@
-const { primaryKey } = require("./User");
-
 module.exports = {
   primaryKey: "reviewId",
   attributes: {

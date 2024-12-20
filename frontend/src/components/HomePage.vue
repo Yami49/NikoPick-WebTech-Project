@@ -15,7 +15,7 @@
         <div class="row justify-content-center mb-4">
           <div class="col-md-12 text-center">
             <img
-              src="@/assets/images/nikopick-logo.jpeg"
+              src="@/assets/images/nikopick-logo.png"
               alt="NikoPick Logo"
               class="logo"
             />

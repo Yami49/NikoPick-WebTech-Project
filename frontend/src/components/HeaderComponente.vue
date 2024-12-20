@@ -3,7 +3,7 @@
     <!-- Logo auf der linken Seite -->
     <div class="header-left">
       <div class="logo" @click="navigateHome" style="cursor: pointer">
-        <img src="@/assets/images/nikopick-logo.jpeg" alt="App Logo" />
+        <img src="@/assets/images/nikopick-logo.png" alt="App Logo" />
       </div>
     </div>
 

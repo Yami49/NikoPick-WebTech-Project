@@ -90,6 +90,13 @@ const routes = [
     name: "TransactionManager",
     component: TransactionManager,
   },
+  /*
+  {
+    path: "/reviews",
+    name: "ReviewList",
+    component: () => import("../components/ReviewList.vue"), // Lazy Loading für Performance
+    meta: { requiresAdmin: true }, // Optional, je nachdem ob nur Admins Zugriff haben sollen
+  },*/
 ];
 
 const router = createRouter({

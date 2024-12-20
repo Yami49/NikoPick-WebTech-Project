@@ -2,19 +2,18 @@ module.exports = {
   // Bewertung erstellen
   create: async function (req, res) {
     try {
-      const { reviewId, rating, comment, user, product } = req.body;
-      const review = await Review.create({
-        reviewId,
+      const { rating, comment, user, product } = req.body;
+      const newReview = await Review.create({
         rating,
         comment,
-        user,
-        product,
+        user, // Benutzer-ID
+        product, // Produkt-ID
       }).fetch();
-      return res.json(review);
+      return res.json(newReview);
     } catch (error) {
       return res.serverError({
         error: "Fehler beim Erstellen der Bewertung.",
-        details: error,
+        details: error.message,
       });
     }
   },
@@ -27,20 +26,7 @@ module.exports = {
     } catch (error) {
       return res.serverError({
         error: "Fehler beim Laden der Bewertungen.",
-        details: error,
-      });
-    }
-  },
-
-  // Bewertung löschen
-  delete: async function (req, res) {
-    try {
-      await Review.destroyOne({ reviewId: req.params.reviewId });
-      return res.json({ message: "Bewertung erfolgreich gelöscht." });
-    } catch (error) {
-      return res.serverError({
-        error: "Fehler beim Löschen der Bewertung.",
-        details: error,
+        details: error.message,
       });
     }
   },

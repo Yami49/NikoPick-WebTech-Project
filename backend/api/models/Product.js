@@ -20,9 +20,6 @@ module.exports = {
     category: {
       model: "category",
     },
-    category: {
-      model: "category",
-    }, // 1:n Beziehung zu Category
     reviews: {
       collection: "review",
       via: "product",

@@ -60,8 +60,9 @@ module.exports.routes = {
   "GET /transactions": "TransactionController.findAll",
   "DELETE /transactions/:id": "TransactionController.delete",
 
-  // ReviewController
-  "DELETE /api/reviews/:reviewId": "ReviewController.delete",
+  /* ReviewController */
+  "POST /api/reviews": "ReviewController.create",
+  "GET /api/reviews": "ReviewController.find",
 
   /***************************************************************************
    *                                                                          *

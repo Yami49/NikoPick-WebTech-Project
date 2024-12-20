@@ -189,7 +189,7 @@ export default {
     },
 
     navigateToProducts() {
-      this.$router.push("/product");
+      this.$router.push("/products");
     },
 
     // Holt die Nachricht vom Backend-API

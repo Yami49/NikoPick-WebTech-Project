@@ -15,12 +15,24 @@
           required
         />
       </div>
-      <div class="form-group">
-        <input
-          v-model="form.phone"
-          type="tel"
-          placeholder="Ihre Telefonnummer"
-        />
+      <div class="form-group phone-group">
+        <div class="phone-wrapper">
+          <select v-model="form.dialCode" class="dial-code-select">
+            <option
+              v-for="country in countries"
+              :key="country.code"
+              :value="country.dialCode"
+            >
+              {{ country.name }} ({{ country.dialCode }})
+            </option>
+          </select>
+          <input
+            v-model="form.phoneNumber"
+            type="tel"
+            placeholder="Ihre Telefonnummer"
+            required
+          />
+        </div>
       </div>
       <div class="form-group">
         <textarea
@@ -29,7 +41,7 @@
           required
         ></textarea>
       </div>
-      <button type="submit" class="submit-button">Nachricht senden</button>
+      <button type="submit" class="submit-button">Senden</button>
     </form>
 
     <!-- Erfolgsnachricht -->
@@ -49,21 +61,39 @@ export default {
       form: {
         name: "",
         email: "",
+        dialCode: "+49", // Standardmäßig Deutschland
+        phoneNumber: "",
         phone: "",
         message: "",
       },
       successMessage: "",
       errorMessage: "",
+      countries: [
+        { name: "Deutschland", code: "DE", dialCode: "+49" },
+        { name: "Vereinigte Staaten", code: "US", dialCode: "+1" },
+        { name: "Frankreich", code: "FR", dialCode: "+33" },
+        { name: "Großbritannien", code: "GB", dialCode: "+44" },
+        { name: "Italien", code: "IT", dialCode: "+39" },
+      ],
     };
   },
   methods: {
     // Nachricht senden
     async sendMessage() {
       try {
-        await api.post("/messages", this.form); // API-Aufruf zum Senden der Nachricht
+        // Vorwahl und Telefonnummer zusammenfügen
+        this.form.phone = `${this.form.dialCode} ${this.form.phoneNumber}`;
+
+        await api.post("/messages", {
+          name: this.form.name,
+          email: this.form.email,
+          phone: this.form.phone,
+          message: this.form.message,
+        });
+
         this.successMessage = "Ihre Nachricht wurde erfolgreich gesendet!";
         this.errorMessage = "";
-        this.form = { name: "", email: "", phone: "", message: "" };
+        this.resetForm();
         setTimeout(() => {
           this.successMessage = "";
         }, 5000);
@@ -73,6 +103,17 @@ export default {
         this.successMessage = "";
         console.error("Fehler beim Senden der Nachricht:", error);
       }
+    },
+    // Formular zurücksetzen
+    resetForm() {
+      this.form = {
+        name: "",
+        email: "",
+        dialCode: "+49",
+        phoneNumber: "",
+        phone: "",
+        message: "",
+      };
     },
   },
 };
@@ -97,9 +138,53 @@ h1 {
 }
 
 .form-group {
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
 
+/* Telefonnummer-Wrapper */
+.phone-group {
+  display: flex;
+  gap: 10px;
+}
+
+.phone-wrapper {
+  display: flex;
+  width: 100%;
+}
+
+.dial-code-select {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 5px 0 0 5px;
+  font-size: 1rem;
+  width: 30%; /* Vorwahl-Feld nimmt 30% der Breite ein */
+}
+
+.phone-wrapper input[type="tel"] {
+  flex: 1; /* Telefonnummer-Feld nimmt den restlichen Platz ein */
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 0 5px 5px 0;
+  font-size: 1rem;
+}
+
+/* Erfolgs- und Fehlermeldungen */
+.success-message,
+.error-message {
+  margin-top: 15px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.success-message {
+  color: #28a745;
+}
+
+.error-message {
+  color: #dc3545;
+}
+
+/* Styling für Eingabefelder und Buttons */
 form input,
 form textarea {
   display: block;
@@ -129,19 +214,5 @@ form textarea {
 
 .submit-button:hover {
   background-color: #0056b3;
-}
-
-.success-message {
-  margin-top: 15px;
-  color: #28a745;
-  font-weight: bold;
-  text-align: center;
-}
-
-.error-message {
-  margin-top: 15px;
-  color: #dc3545;
-  font-weight: bold;
-  text-align: center;
 }
 </style>

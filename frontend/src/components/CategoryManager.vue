@@ -19,10 +19,12 @@
           <strong>{{ cat.name }}</strong>
           <p>{{ cat.description }}</p>
         </div>
-        <router-link :to="`/category/${cat.categoryId}`">
-          <button>Anzeigen</button>
-        </router-link>
-        <button @click="deleteCategory(cat.categoryId)">Löschen</button>
+        <div class="button-group">
+          <router-link :to="`/category/${cat.categoryId}`">
+            <button>Anzeigen</button>
+          </router-link>
+          <button @click="deleteCategory(cat.categoryId)">Löschen</button>
+        </div>
       </li>
     </ul>
   </div>
@@ -113,17 +115,11 @@ li {
   flex-direction: column;
 }
 
-button {
-  background-color: #e74c3c;
-  color: white;
-  border: none;
-  padding: 8px 12px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #c0392b;
+/* Button-Gruppe für die Anzeige und Löschen Buttons */
+.button-group {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end; /* Rechtsbündige Anordnung */
 }
 
 .error-message {

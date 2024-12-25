@@ -2,7 +2,8 @@
   "dependencies": {
     "intl-tel-input": "^25.2.0",
     "jsonwebtoken": "^9.0.2",
-    "sails-mysql": "^3.0.1"
+    "sails-mysql": "^3.0.1",
+    "vue-slider-component": "^3.2.24"
   },
   "devDependencies": {
     "husky": "^9.1.7",

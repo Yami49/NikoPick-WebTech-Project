@@ -48,7 +48,9 @@ export default {
     async fetchMessages() {
       try {
         const response = await api.get("/messages");
-        this.messages = response.data;
+        this.messages = response.data.sort(
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt),
+        );
       } catch (error) {
         console.error("Fehler beim Laden der Nachrichten:", error);
       }

@@ -53,6 +53,7 @@
 
 <script>
 import api from "@/services/api";
+import axios from "axios"; // Für den API-Aufruf
 
 export default {
   name: "ContactComponente",
@@ -68,20 +69,33 @@ export default {
       },
       successMessage: "",
       errorMessage: "",
-      countries: [
-        { name: "Deutschland", code: "DE", dialCode: "+49" },
-        { name: "Vereinigte Staaten", code: "US", dialCode: "+1" },
-        { name: "Frankreich", code: "FR", dialCode: "+33" },
-        { name: "Großbritannien", code: "GB", dialCode: "+44" },
-        { name: "Italien", code: "IT", dialCode: "+39" },
-      ],
+      countries: [], // Leere Liste, wird dynamisch gefüllt
     };
   },
+  async created() {
+    await this.loadCountries();
+  },
   methods: {
+    // Länder dynamisch laden
+    async loadCountries() {
+      try {
+        const response = await axios.get("https://restcountries.com/v3.1/all");
+        this.countries = response.data
+          .map((country) => ({
+            name: country.name.common,
+            code: country.cca2,
+            dialCode: country.idd?.root
+              ? `${country.idd.root}${country.idd.suffixes?.[0] || ""}`
+              : "",
+          }))
+          .filter((country) => country.dialCode); // Nur Länder mit Vorwahlen
+      } catch (error) {
+        console.error("Fehler beim Laden der Länderliste:", error);
+      }
+    },
     // Nachricht senden
     async sendMessage() {
       try {
-        // Vorwahl und Telefonnummer zusammenfügen
         this.form.phone = `${this.form.dialCode} ${this.form.phoneNumber}`;
 
         await api.post("/messages", {

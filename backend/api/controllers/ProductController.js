@@ -3,79 +3,30 @@ module.exports = {
   create: async function (req, res) {
     try {
       const { name, description, price, category } = req.body;
-
-      // Validierung der Eingabedaten
-      if (!name || !price) {
-        return res.badRequest({
-          error: "Name und Preis sind erforderlich.",
-        });
-      }
-
       const product = await Product.create({
         name,
         description,
         price,
         category,
       }).fetch();
-
-      return res.status(201).json(product);
+      return res.json(product);
     } catch (error) {
-      console.error("Fehler beim Erstellen des Produkts:", error);
       return res.serverError({
         error: "Fehler beim Erstellen des Produkts.",
-        details: error.message,
+        details: error,
       });
     }
   },
 
-  // Alle Produkte anzeigen mit Paginierung und Filterung
+  // Alle Produkte anzeigen
   findAll: async function (req, res) {
     try {
-      const {
-        page = 1,
-        limit = 10,
-        name,
-        minPrice,
-        maxPrice,
-        category,
-      } = req.query;
-
-      const filters = {};
-
-      // Filterlogik
-      if (name) {
-        filters.name = { contains: name };
-      }
-      if (minPrice) {
-        filters.price = { ">=": parseFloat(minPrice) };
-      }
-      if (maxPrice) {
-        filters.price = { "<=": parseFloat(maxPrice) };
-      }
-      if (category) {
-        filters.category = category;
-      }
-
-      const products = await Product.find(filters)
-        .populate("category")
-        .skip((page - 1) * limit)
-        .limit(limit);
-
-      const totalProducts = await Product.count(filters);
-
-      return res.json({
-        data: products,
-        meta: {
-          total: totalProducts,
-          page: parseInt(page),
-          limit: parseInt(limit),
-        },
-      });
+      const products = await Product.find().populate("category");
+      return res.json(products);
     } catch (error) {
-      console.error("Fehler beim Laden der Produkte:", error);
       return res.serverError({
         error: "Fehler beim Laden der Produkte.",
-        details: error.message,
+        details: error,
       });
     }
   },
@@ -86,19 +37,12 @@ module.exports = {
       const product = await Product.findOne({
         productId: req.params.productId,
       }).populate("category");
-
-      if (!product) {
-        return res.notFound({
-          error: "Produkt nicht gefunden.",
-        });
-      }
-
+      if (!product) return res.notFound({ error: "Produkt nicht gefunden." });
       return res.json(product);
     } catch (error) {
-      console.error("Fehler beim Laden des Produkts:", error);
       return res.serverError({
         error: "Fehler beim Laden des Produkts.",
-        details: error.message,
+        details: error,
       });
     }
   },
@@ -106,34 +50,41 @@ module.exports = {
   // Produkt aktualisieren
   update: async function (req, res) {
     try {
+      // Validierung der Eingabeparameter
       const { name, description, price, category } = req.body;
+      const productId = parseInt(req.params.productId, 10);
 
-      // Validierung der Eingabedaten
-      if (!name || !price) {
-        return res.badRequest({
-          error: "Name und Preis sind erforderlich.",
+      if (isNaN(productId)) {
+        return res.status(400).json({ error: "Ungültige Produkt-ID." });
+      }
+
+      // Sicherstellen, dass die notwendigen Felder vorhanden sind
+      if (!name && !description && !price && !category) {
+        return res.status(400).json({
+          error:
+            "Mindestens ein Feld (name, description, price, category) muss angegeben werden.",
         });
       }
 
-      const updatedProduct = await Product.updateOne({
-        productId: req.params.productId,
-      }).set({
+      // Aktualisierung des Produkts
+      const updatedProduct = await Product.updateOne({ productId }).set({
         name,
         description,
         price,
         category,
       });
 
+      // Überprüfen, ob ein Produkt aktualisiert wurde
       if (!updatedProduct) {
-        return res.notFound({
-          error: "Produkt nicht gefunden.",
-        });
+        return res.status(404).json({ error: "Produkt nicht gefunden." });
       }
 
-      return res.json(updatedProduct);
+      // Erfolgreiche Aktualisierung zurückgeben
+      return res.status(200).json(updatedProduct);
     } catch (error) {
+      // Fehlerbehandlung
       console.error("Fehler beim Aktualisieren des Produkts:", error);
-      return res.serverError({
+      return res.status(500).json({
         error: "Fehler beim Aktualisieren des Produkts.",
         details: error.message,
       });
@@ -143,22 +94,12 @@ module.exports = {
   // Produkt löschen
   delete: async function (req, res) {
     try {
-      const deletedProduct = await Product.destroyOne({
-        productId: req.params.productId,
-      });
-
-      if (!deletedProduct) {
-        return res.notFound({
-          error: "Produkt nicht gefunden.",
-        });
-      }
-
+      await Product.destroyOne({ productId: req.params.productId });
       return res.json({ message: "Produkt erfolgreich gelöscht." });
     } catch (error) {
-      console.error("Fehler beim Löschen des Produkts:", error);
       return res.serverError({
         error: "Fehler beim Löschen des Produkts.",
-        details: error.message,
+        details: error,
       });
     }
   },

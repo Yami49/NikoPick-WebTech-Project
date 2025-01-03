@@ -12,6 +12,7 @@
       <input v-model="minPrice" placeholder="Min Preis" type="number" />
       <input v-model="maxPrice" placeholder="Max Preis" type="number" />
 
+      <!-- Kategorie-Dropdown für den Filter -->
       <select v-model="selectedCategory" @change="searchProducts">
         <option value="">Alle Kategorien</option>
         <option
@@ -25,7 +26,7 @@
       <button @click="searchProducts">Suchen</button>
     </div>
 
-    <!-- Formular zum Erstellen/Bearbeiten eines Produkts -->
+    <!-- Formular zum Erstellen/Bearbeiten eines Produkts (nur für Admins) -->
     <form @submit.prevent="saveProduct" v-if="userRole === 'admin'">
       <input v-model="product.name" placeholder="Name" required />
       <input v-model="product.description" placeholder="Beschreibung" />
@@ -60,7 +61,7 @@
       <li v-for="p in products" :key="p.productId">
         <span
           >{{ p.name }} - {{ p.price }}€ -
-          {{ getCategoryName(p.category) }}</span
+          {{ p.category ? p.category.name : "Keine Kategorie" }}</span
         >
         <div class="button-group">
           <router-link :to="`/products/${p.productId}`">
@@ -70,31 +71,9 @@
             <button @click="editProduct(p)">Bearbeiten</button>
             <button @click="deleteProduct(p.productId)">Löschen</button>
           </div>
-          <button @click="addToCart(p)">In den Warenkorb</button>
         </div>
       </li>
     </ul>
-
-    <!-- Warenkorb -->
-    <div class="cart">
-      <h2>Warenkorb</h2>
-      <ul>
-        <li v-for="item in cart" :key="item.productId">
-          <span>
-            {{ item.name }} - {{ item.price }}€ x {{ item.quantity }}
-          </span>
-          <div class="cart-actions">
-            <button @click="decreaseQuantity(item.productId)">-</button>
-            <button @click="removeFromCart(item.productId)">
-              Alles entfernen
-            </button>
-          </div>
-        </li>
-      </ul>
-      <p v-if="cart.length === 0">Der Warenkorb ist leer.</p>
-      <p v-else>Gesamt: {{ totalPrice() }}€</p>
-      <button v-if="cart.length > 0" @click="checkout">Zur Kasse</button>
-    </div>
   </div>
 </template>
 
@@ -115,7 +94,6 @@ export default {
       isEditing: false,
       editingId: null,
       userRole: null,
-      cart: [], // Warenkorb
     };
   },
   created() {
@@ -129,6 +107,7 @@ export default {
       try {
         const response = await api.get("/products");
         this.products = response.data;
+        console.log("Geladene Produkte:", this.products); // Debugging-Log
       } catch (error) {
         console.error("Fehler beim Laden der Produkte:", error);
       }
@@ -138,6 +117,7 @@ export default {
       try {
         const response = await api.get("/category");
         this.categories = response.data;
+        console.log("Geladene Kategorien:", this.categories); // Debugging-Log
       } catch (error) {
         console.error("Fehler beim Laden der Kategorien:", error);
       }
@@ -145,16 +125,14 @@ export default {
     // Such- und Filterfunktion
     async searchProducts() {
       try {
-        // Bereinigen der Eingabewerte
-        const params = {};
-        if (this.searchQuery) params.name = this.searchQuery.trim();
-        if (this.minPrice) params.minPrice = parseFloat(this.minPrice);
-        if (this.maxPrice) params.maxPrice = parseFloat(this.maxPrice);
-        if (this.selectedCategory) params.category = this.selectedCategory;
-
-        console.log("Suchparameter:", params); // Debugging
-
-        const response = await api.get("/products/search", { params });
+        const response = await api.get("/products/search", {
+          params: {
+            name: this.searchQuery,
+            minPrice: this.minPrice,
+            maxPrice: this.maxPrice,
+            category: this.selectedCategory,
+          },
+        });
         this.products = response.data;
       } catch (error) {
         console.error("Fehler bei der Suche:", error);
@@ -163,10 +141,21 @@ export default {
     // Produkt speichern (Erstellen oder Aktualisieren)
     async saveProduct() {
       try {
+        const payload = {
+          name: this.product.name,
+          description: this.product.description,
+          price: this.product.price,
+        };
+
+        // Kategorie nur hinzufügen, wenn sie gesetzt ist
+        if (this.product.category) {
+          payload.category = this.product.category;
+        }
+
         if (this.isEditing) {
-          await api.put(`/products/${this.editingId}`, this.product);
+          await api.put(`/products/${this.editingId}`, payload);
         } else {
-          await api.post("/products", this.product);
+          await api.post("/products", payload);
         }
         this.resetForm();
         this.fetchProducts();
@@ -180,7 +169,7 @@ export default {
         name: product.name,
         description: product.description,
         price: product.price,
-        category: product.category,
+        category: product.category ? product.category.categoryId : "",
       };
       this.isEditing = true;
       this.editingId = product.productId;
@@ -205,55 +194,13 @@ export default {
       const category = this.categories.find((c) => c.categoryId === categoryId);
       return category ? category.name : "Keine Kategorie";
     },
-    // Produkt in den Warenkorb legen
-    addToCart(product) {
-      const existingProduct = this.cart.find(
-        (item) => item.productId === product.productId,
-      );
-      if (existingProduct) {
-        existingProduct.quantity += 1;
-      } else {
-        this.cart.push({ ...product, quantity: 1 });
-      }
-    },
-    // Anzahl eines Produkts verringern
-    decreaseQuantity(productId) {
-      const existingProduct = this.cart.find(
-        (item) => item.productId === productId,
-      );
-      if (existingProduct) {
-        if (existingProduct.quantity > 1) {
-          existingProduct.quantity -= 1;
-        } else {
-          this.cart = this.cart.filter((item) => item.productId !== productId);
-        }
-      }
-    },
-    // Produkt komplett aus dem Warenkorb entfernen
-    removeFromCart(productId) {
-      this.cart = this.cart.filter((item) => item.productId !== productId);
-    },
-    // Gesamtpreis des Warenkorbs berechnen
-    totalPrice() {
-      return this.cart.reduce(
-        (sum, item) => sum + item.price * item.quantity,
-        0,
-      );
-    },
-    // Warenkorb zur Kasse weiterleiten
-    checkout() {
-      alert("Zur Kasse gehen!"); // Hier kann die Checkout-Logik implementiert werden
-      this.cart = []; // Warenkorb leeren
-    },
   },
 };
 </script>
 
-<style scoped>
-.cart-actions button {
-  margin-left: 5px;
-}
+<style src="../assets/styles.css"></style>
 
+<style scoped>
 .search-filters input {
   display: inline-block;
   margin-right: 10px;

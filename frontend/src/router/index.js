@@ -13,6 +13,7 @@ import MessageList from "../components/MessageList.vue";
 import MessageDetail from "../components/MessageDetail.vue";
 import ProductDetail from "../components/ProductDetail.vue";
 import TransactionManager from "../components/TransactionManager.vue";
+import CartComponent from "@/components/CartComponent.vue";
 
 const routes = [
   {
@@ -89,6 +90,11 @@ const routes = [
     path: "/transactions",
     name: "TransactionManager",
     component: TransactionManager,
+  },
+  {
+    path: "/cart",
+    name: "Cart",
+    component: CartComponent,
   },
   /*
   {
